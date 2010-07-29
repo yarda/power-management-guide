@@ -4,11 +4,11 @@
 
 <bookinfo id="Power_Management_Guide-Product_Name_and_Version">
 	<title>Power Management Guide</title>
-	<subtitle>(Beta) Managing power consumption on Red Hat Enterprise Linux &PRODVER;</subtitle>
-	<productname>Red Hat Enterprise Linux</productname>
-	<productnumber>6 Beta</productnumber>
-	<edition>0.2</edition>
-	<pubsnumber>19</pubsnumber>
+	<subtitle>Managing power consumption on Fedora</subtitle>
+	<productname>Fedora Draft Documentation</productname>
+	<productnumber></productnumber>
+	<edition>14.0.1</edition>
+	<pubsnumber>0</pubsnumber>
 	<abstract><para>This document explains how to manage power consumption on Red Hat Enterprise Linux &PRODVER; systems effectively. The following sections discuss different techniques that lower power consumption (for both server and laptop), and how each technique affects the overall performance of your system. Please note: This document is still under development, is subject to heavy change, and is provided here as a preview. The content and instructions contained within should not be considered complete, and should be used with caution.</para></abstract>
 	<corpauthor>
 		<inlinemediaobject>
