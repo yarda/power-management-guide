@@ -25,7 +25,7 @@
 <secondary>CPUfreq</secondary>
 </indexterm>
 	
-	<para>This section lists and describes the different types of CPUfreq governors available in Red Hat Enterprise Linux &PRODVER;.</para>
+	<para>This section lists and describes the different types of CPUfreq governors available in Fedora&nbsp;&PRODVER;.</para>
 
 <formalpara><title>cpufreq_performance</title>
 <indexterm>

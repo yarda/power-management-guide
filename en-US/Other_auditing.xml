@@ -4,7 +4,7 @@
 <section id="Other_auditing">
 	<title>Other means for auditing</title>
 	<para>
-		Red Hat Enterprise Linux &PRODVER; offers quite a few more tools with which to perform system auditing and analysis. Most of them can be used as a supplementary sources of information in case you want to verify what you have discovered already or in case you need more in-depth information on certain parts. Many of these tools are used for performance tuning as well. They include:
+		Fedora&nbsp;&PRODVER; offers quite a few more tools with which to perform system auditing and analysis. Most of them can be used as a supplementary sources of information in case you want to verify what you have discovered already or in case you need more in-depth information on certain parts. Many of these tools are used for performance tuning as well. They include:
 	</para>
 	<variablelist>
 		<varlistentry>

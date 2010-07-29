@@ -7,6 +7,6 @@
 		Previously, the Linux kernel periodically interrupted each CPU on a system at a predetermined frequency — 100&nbsp;Hz, 250&nbsp;Hz, or 1000&nbsp;Hz, depending on the platform. The kernel queried the CPU about the processes that it was executing, and used the results for process accounting and load balancing. Known as the <firstterm>timer tick</firstterm>, the kernel performed this interrupt regardless of the power state of the CPU. Therefore, even an idle CPU was responding to up to 1000 of these requests every second. On systems that implemented power saving measures for idle CPUs, the timer tick prevented the CPU from remaining idle long enough for the system to benefit from these power savings.
 	</para>
 	<para>
-		The kernel in Red Hat Enterprise Linux &PRODVER; runs <firstterm>tickless</firstterm>: that is, it replaces the old periodic timer interrupts with on-demand interrupts. Therefore, idle CPUs are allowed to remain idle until a new task is queued for processing, and CPUs that have entered lower power states can remain in these states longer.
+		The kernel in Fedora&nbsp;&PRODVER; runs <firstterm>tickless</firstterm>: that is, it replaces the old periodic timer interrupts with on-demand interrupts. Therefore, idle CPUs are allowed to remain idle until a new task is queued for processing, and CPUs that have entered lower power states can remain in these states longer.
 	</para>
 </section>

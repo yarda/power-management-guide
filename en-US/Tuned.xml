@@ -14,7 +14,7 @@
 		Network devices are not configured to behave this way by default because speed changes can take several seconds to take effect and therefore directly and visibly impact the user experience. Similar considerations apply for the CPU and hard drive tuning plugins. When a hard drive has been spun down, it can take several seconds for it to spin up again which results in an observed lack of responsiveness of the system during that period. The latency side effect is smallest for the CPU plugin, but it is still at least measurable, though hardly noticeable by a user.
 	</para>
 	<para>
-		Alongside of <application>tuned</application> we now also offer <application>ktune</application>. <application>Ktune</application> was introduced in Red Hat Enterprise Linux 5.3 as a framework and service to optimize the performance of a machine for a specific use cases. Since then, <application>ktune</application> has improved to such a degree that we now use it as the static part of our general tuning framework. It is mainly used in the different predefined profiles described in <xref linkend="tuned-adm"/>.
+		Alongside of <application>tuned</application> we now also offer <application>ktune</application>. <application>Ktune</application> was originally a framework and service to optimize the performance of a machine for a specific use cases. Since then, <application>ktune</application> has improved to such a degree that we now use it as the static part of our general tuning framework. It is mainly used in the different predefined profiles described in <xref linkend="tuned-adm"/>.
 	</para>
 
 	<para>
@@ -191,7 +191,7 @@ enabled=True</programlisting>
 	<section id="tuned-adm">
 		<title>Tuned-adm</title>
 		<para>
-			Often, a detailed audit and analysis of a system can be very time consuming and might not be worth the few extra watts you might be able to save by doing so. Previously, the only alternative was simply to use the defaults. Therefore, Red Hat Enterprise Linux &PRODVER; includes separate profiles for specific use cases as an alternative between those two extremes, together with the <application>tuned-adm</application> tool that allows you to switch between these profiles easily at the command line. Red Hat Enterprise Linux &PRODVER; includes a number of predefined profiles for typical use cases that you can simply select and activate with the <command>tuned-adm</command> command, but you can also create, modify or delete profiles yourself.
+			Often, a detailed audit and analysis of a system can be very time consuming and might not be worth the few extra watts you might be able to save by doing so. Previously, the only alternative was simply to use the defaults. Therefore, Fedora&nbsp;&PRODVER; includes separate profiles for specific use cases as an alternative between those two extremes, together with the <application>tuned-adm</application> tool that allows you to switch between these profiles easily at the command line. Fedora&nbsp;&PRODVER; includes a number of predefined profiles for typical use cases that you can simply select and activate with the <command>tuned-adm</command> command, but you can also create, modify or delete profiles yourself.
 		</para>
 		<para>
 			To list all available profiles and identify the current active profile, run:
@@ -214,7 +214,7 @@ enabled=True</programlisting>
 		</para>
 <screen><command>tuned-adm off</command></screen>
 		<para>
-			When you first install <application>tuned</application>, the <literal>default</literal> profile will be active. Red Hat Enterprise Linux &PRODVER; also includes the following predefined profiles:
+			When you first install <application>tuned</application>, the <literal>default</literal> profile will be active. Fedora&nbsp;&PRODVER; also includes the following predefined profiles:
 		</para>
 		<variablelist>
 			<varlistentry>

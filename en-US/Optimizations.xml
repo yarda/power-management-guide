@@ -4,13 +4,13 @@
 <section id="Optimizations_in_User_Space">
 	<title>Optimizations in User Space</title>
 	<para>
-		Reducing the amount of work performed by system hardware is fundamental to saving power. Therefore, although the changes described in <xref linkend="Core_Infrastructure"/> permit the system to operate in various states of reduced power consumption, applications in user space that request unnecessary work from system hardware prevent the hardware from entering those states. During the development of Red Hat Enterprise Linux &PRODVER;, audits were undertaken in the following areas to reduce unnecessary demands on hardware:
+		Reducing the amount of work performed by system hardware is fundamental to saving power. Therefore, although the changes described in <xref linkend="Core_Infrastructure"/> permit the system to operate in various states of reduced power consumption, applications in user space that request unnecessary work from system hardware prevent the hardware from entering those states. During the development of Fedora&nbsp;&PRODVER;, audits were undertaken in the following areas to reduce unnecessary demands on hardware:
 	</para>
 	
 	<formalpara>
 		<title>Reduced wakeups</title>
 		<para>
-			Red Hat Enterprise Linux &PRODVER; uses a <firstterm>tickless kernel</firstterm> (refer to <xref linkend="Tickless-kernel"/>), which allows the CPUs to remain in deeper idle states longer. However, the <firstterm>timer tick</firstterm> is not the only source of excessive CPU wakeups, and function calls from applications can also prevent the CPU from entering or remaining in idle states. Unnecessary function calls were reduced in over 50 applications.  
+			Fedora&nbsp;&PRODVER; uses a <firstterm>tickless kernel</firstterm> (refer to <xref linkend="Tickless-kernel"/>), which allows the CPUs to remain in deeper idle states longer. However, the <firstterm>timer tick</firstterm> is not the only source of excessive CPU wakeups, and function calls from applications can also prevent the CPU from entering or remaining in idle states. Unnecessary function calls were reduced in over 50 applications.  
 		</para>
 	</formalpara>
 	<formalpara>

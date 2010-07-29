@@ -4,7 +4,7 @@
 <section id="BLTK">
 	<title>Battery Life Tool Kit</title>
 	<para>
-		Red Hat Enterprise Linux 6 introduces the <application>Battery Life Tool Kit</application> (<acronym>BLTK</acronym>), a test suite that simulates and analyzes battery life and performance. <acronym>BLTK</acronym> achieves this by performing sets of tasks that simulate specific user groups and reporting on the results. Although developed specifically to test notebook performance, <acronym>BLTK</acronym> can also report on the performance of desktop computers when started with the <option>-a</option>.
+		The <application>Battery Life Tool Kit</application> (<acronym>BLTK</acronym>), is a test suite that simulates and analyzes battery life and performance. <acronym>BLTK</acronym> achieves this by performing sets of tasks that simulate specific user groups and reporting on the results. Although developed specifically to test notebook performance, <acronym>BLTK</acronym> can also report on the performance of desktop computers when started with the <option>-a</option>.
 	</para>
 	<para>
 		BLTK allows you to generate very reproducible workloads that are comparable to real use of a machine. For example, the <literal>office</literal> workload writes a text, corrects things in it, and does the same for a spreadsheet. Running BLTK combined with <application>PowerTOP</application> or any of the other auditing or analysis tool allows you to test if the optimizations you performed have an effect when the machine is actively in use instead of only idling. Because you can run the exact same workload multiple times for different settings, you can compare results for different settings.

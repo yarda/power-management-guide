@@ -36,7 +36,7 @@
 	<itemizedlist>
 		<listitem>
 			<para>
-				use the <systemitem>ondemand</systemitem> governor (enabled by default in Red Hat Enterprise Linux &PRODVER;)
+				use the <systemitem>ondemand</systemitem> governor (enabled by default in Fedora&nbsp;&PRODVER;)
 			</para>
 		</listitem>
 		<listitem>
@@ -59,7 +59,7 @@
 		</listitem>
 		<listitem>
 			<para>
-				enable AC97 audio power-saving (enabled by default in Red Hat Enterprise Linux &PRODVER;):
+				enable AC97 audio power-saving (enabled by default in Fedora&nbsp;&PRODVER;):
 			</para>
 <screen><command>echo Y &gt; /sys/module/snd_ac97_codec/parameters/power_save</command></screen>
 		</listitem>
@@ -86,7 +86,7 @@
 		</listitem>
 		<listitem>
 			<para>
-				mount filesystem using relatime  (default in Red Hat Enterprise Linux &PRODVER;):
+				mount filesystem using relatime  (default in Fedora&nbsp;&PRODVER;):
 			</para>
 <screen><command>mount -o remount,relatime <replaceable>mountpoint</replaceable></command></screen>
 		</listitem>

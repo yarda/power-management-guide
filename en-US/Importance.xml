@@ -5,7 +5,7 @@
 <chapter id="overview">
 	<title>Overview</title>
 	<para>
-		Power management has been one of our focus points for improvements for Red Hat Enterprise Linux 6. Limiting the power used by computer systems is one of the most important aspects of <firstterm>green IT</firstterm> (environmentally friendly computing), a set of considerations that also encompasses the use of recyclable materials, the environmental impact of hardware production, and environmental awareness in the design and deployment of systems. In this document, we provide guidance and information regarding power management of your systems running Red Hat Enterprise Linux 6.
+		Limiting the power used by computer systems is one of the most important aspects of <firstterm>green IT</firstterm> (environmentally friendly computing), a set of considerations that also encompasses the use of recyclable materials, the environmental impact of hardware production, and environmental awareness in the design and deployment of systems. In this document, we provide guidance and information regarding power management of your systems running Fedora&nbsp;&PRODVER;.
 	</para>
 	<section id="intro_importance">
 		<title>Importance of Power Management</title>
@@ -48,11 +48,11 @@
 		</para>
 		
 		<para>
-			By studying the different tasks that your system performs, and configuring each component to ensure that its performance is just sufficient for the job, you can save energy, generate less heat, and optimize battery life for laptops. Many of the principles for analysis and tuning of a system in regard to power consumption are similar to those for performance tuning. To some degree, power management and performance tuning are opposite approaches to system configuration, because systems are usually optimized either towards performance or power. This manual describes the tools that Red Hat provides and the techniques we have developed to help you in this process.
+			By studying the different tasks that your system performs, and configuring each component to ensure that its performance is just sufficient for the job, you can save energy, generate less heat, and optimize battery life for laptops. Many of the principles for analysis and tuning of a system in regard to power consumption are similar to those for performance tuning. To some degree, power management and performance tuning are opposite approaches to system configuration, because systems are usually optimized either towards performance or power. This manual describes the tools that the Fedora Project provides and the techniques we have developed to help you in this process.
 		</para>
 		
 		<para>
-			Red Hat Enterprise Linux 6 already comes with a lot of new power management features that are enabled by default. They were all selectively chosen to not impact the performance of a typical server or desktop use case. However, for very specific use cases where maximum throughput, lowest latency, or highest CPU performance is absolutely required, a review of those defaults might be necessary.
+			Fedora&nbsp;&PRODVER; already comes with a lot of new power management features that are enabled by default. They were all selectively chosen to not impact the performance of a typical server or desktop use case. However, for very specific use cases where maximum throughput, lowest latency, or highest CPU performance is absolutely required, a review of those defaults might be necessary.
 		</para>
 		
 		<para>
@@ -92,7 +92,7 @@
 				</question>
 				<answer>
 					<para>
-						Most of the techniques described in this document impact the performance of your system noticeably. If you choose to implement power management beyond the defaults already in place in Red Hat Enterprise Linux 6, you should monitor the performance of the system after power optimization and decide if the performance loss is acceptable.
+						Most of the techniques described in this document impact the performance of your system noticeably. If you choose to implement power management beyond the defaults already in place in Fedora&nbsp;&PRODVER;, you should monitor the performance of the system after power optimization and decide if the performance loss is acceptable.
 					</para>
 				</answer>
 			</qandaentry>

@@ -4,7 +4,7 @@
 <section id="Power_Capping">
 	<title>Power Capping</title>
 	<para>
-		Red Hat Enterprise Linux &PRODVER; supports the power capping features found in recent hardware, such as HP <firstterm>Dynamic Power Capping</firstterm> (DPC), and Intel Node Manager (NM) technology. Power capping allows administrators to limit the power consumed by servers, but it also allows managers to plan data centers more efficiently, because the risk of overloading existing power supplies is greatly diminished. Managers can place more servers within the same physical footprint and have confidence that if server power consumption is capped, the demand for power during heavy load will not exceed the power available.
+		Fedora&nbsp;&PRODVER; supports the power capping features found in recent hardware, such as HP <firstterm>Dynamic Power Capping</firstterm> (DPC), and Intel Node Manager (NM) technology. Power capping allows administrators to limit the power consumed by servers, but it also allows managers to plan data centers more efficiently, because the risk of overloading existing power supplies is greatly diminished. Managers can place more servers within the same physical footprint and have confidence that if server power consumption is capped, the demand for power during heavy load will not exceed the power available.
 	</para>
 	
 	<formalpara>
@@ -15,7 +15,7 @@
 	</formalpara>
 
 	<para>
-		Dynamic Power Capping modifies CPU behavior independently of the operating system, however, HP's <firstterm>integrated Lights-Out 2</firstterm> (iLO2) firmware allows operating systems access to the management processor and therefore applications in user space can query the management processor. The kernel used in Red Hat Enterprise Linux &PRODVER; includes a driver for HP iLO and iLO2 firmware, which allows programs to query management processors at <filename>/dev/hpilo/d<replaceable>X</replaceable>ccb<replaceable>N</replaceable></filename>. The kernel also includes an extension of the <systemitem>hwmon</systemitem> <systemitem>sysfs</systemitem> interface to support power capping features, and a <systemitem>hwmon</systemitem> driver for ACPI 4.0 power meters that use the <systemitem>sysfs</systemitem> interface. Together, these features allow the operating system and user-space tools to read the value configured for the power cap, together with the current power usage of the system.
+		Dynamic Power Capping modifies CPU behavior independently of the operating system, however, HP's <firstterm>integrated Lights-Out 2</firstterm> (iLO2) firmware allows operating systems access to the management processor and therefore applications in user space can query the management processor. The kernel used in Fedora&nbsp;&PRODVER; includes a driver for HP iLO and iLO2 firmware, which allows programs to query management processors at <filename>/dev/hpilo/d<replaceable>X</replaceable>ccb<replaceable>N</replaceable></filename>. The kernel also includes an extension of the <systemitem>hwmon</systemitem> <systemitem>sysfs</systemitem> interface to support power capping features, and a <systemitem>hwmon</systemitem> driver for ACPI 4.0 power meters that use the <systemitem>sysfs</systemitem> interface. Together, these features allow the operating system and user-space tools to read the value configured for the power cap, together with the current power usage of the system.
 	</para>
 	
 	<para>

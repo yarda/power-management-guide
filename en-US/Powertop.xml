@@ -4,7 +4,7 @@
 <section id="PowerTOP">
 	<title>PowerTOP</title>
 	<para>
-		The introduction of the tickless kernel in Red Hat Enterprise Linux 6 (refer to <xref linkend="Tickless-kernel"/>) allows the CPU to enter the idle state more frequently, reducing power consumption and improving power management. The new <application>PowerTOP</application> tool identifies specific components of kernel and userspace applications that frequently wake up the CPU. <application>PowerTOP</application> was used in development to perform the audits described in <xref linkend="Optimizations_in_User_Space"/> that led to many applications being tuned in this release, reducing unnecessary CPU wake up by a factor of ten.
+		The tickless kernel in Fedora allows the CPU to enter the idle state more frequently, reducing power consumption and improving power management. The new <application>PowerTOP</application> tool identifies specific components of kernel and userspace applications that frequently wake up the CPU. <application>PowerTOP</application> was used in development to perform the audits described in <xref linkend="Optimizations_in_User_Space"/> that led to many applications being tuned in this release, reducing unnecessary CPU wake up by a factor of ten.
 	</para>
 	<para>
 		Install <application>PowerTOP</application> with the command:
