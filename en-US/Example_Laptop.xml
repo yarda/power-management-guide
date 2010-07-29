@@ -1,0 +1,136 @@
+<?xml version='1.0'?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docarticle/xml/4.5/docarticlex.dtd" [
+]>
+<section id="Example_Laptop">
+	<title>Example — Laptop</title>
+	
+	<para>
+		One other very common place where power management and savings can really make a difference are laptops. As laptops by design normally already use drastically less energy than workstations or servers the potential for absolute savings are less than for other machines. When in battery mode, though, any saving can help to get a few more minutes of battery life out of a laptop. Although this section focuses on laptops in battery mode, but you certainly can still use some or all of those tunings while running on AC power as well.
+	</para>
+	<para>
+		Savings for single components usually make a bigger relative difference on laptops than they do on workstations. For example, a 1&nbsp;Gbit/s network interface running at 100&nbsp;Mbits/s saves around 3–4&nbsp;watts. For a typical server with a total power consumption of around 400&nbsp;watts, this saving is approximately 1&nbsp;%. On a laptop with a total power consumption of around 40&nbsp;watts, the power saving on just this one component amounts to 10&nbsp;% of the total.
+	</para>
+	<para>
+		Specific power-saving optimizations on a typical laptop include:
+	</para>
+	<itemizedlist>
+		<listitem>
+			<para>
+				 Configure the system BIOS to disable all hardware that you do not use. For example, parallel or serial ports, card readers, webcams, WiFi, and Bluetooth just to name a few possible candidates.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				 Dim the display in darker environments where you do not need full illumination to read the screen comfortably. Use <menuchoice> <guimenu>System</guimenu> <guimenu>Preferences</guimenu> <guimenuitem>Power Management</guimenuitem> </menuchoice> on the GNOME desktop, <menuchoice> <guimenu>Kickoff Application Launcher</guimenu> <guimenu>Computer</guimenu> <guimenu>System Settings</guimenu> <guimenu>Advanced</guimenu> <guimenuitem>Power Management</guimenuitem> </menuchoice>  on the KDE desktop; or <application>gnome-power-manager</application>  or <application>xbacklight</application> at the command line; or the function keys on your laptop.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				 Use the <systemitem>laptop-battery-powersave</systemitem> profile of <application>tuned-adm</application> to enable a whole set of power-saving mechanisms. Note that performance and latency for the hard drive and network interface are impacted.
+			</para>
+		</listitem>
+	</itemizedlist>
+	<para>
+		Additionally (or alternatively) you can perform many small adjustments to various system settings:
+	</para>
+	<itemizedlist>
+		<listitem>
+			<para>
+				use the <systemitem>ondemand</systemitem> governor (enabled by default in Red Hat Enterprise Linux &PRODVER;)
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				enable laptop mode (part of the <systemitem>laptop-battery-powersave</systemitem> profile):
+			</para>
+<screen><command>echo 5 &gt; /proc/sys/vm/laptop_mode</command></screen>
+		</listitem>
+		<listitem>
+			<para>
+				increase flush time to disk (part of the <systemitem>laptop-battery-powersave</systemitem> profile):
+			</para>
+<screen><command>echo 1500 &gt; /proc/sys/vm/dirty_writeback_centisecs</command></screen>
+		</listitem>
+		<listitem>
+			<para>
+				disable nmi watchdog (part of the <systemitem>laptop-battery-powersave</systemitem> profile):
+			</para>
+<screen><command>echo 0 &gt; /proc/sys/kernel/nmi_watchdog</command></screen>
+		</listitem>
+		<listitem>
+			<para>
+				enable AC97 audio power-saving (enabled by default in Red Hat Enterprise Linux &PRODVER;):
+			</para>
+<screen><command>echo Y &gt; /sys/module/snd_ac97_codec/parameters/power_save</command></screen>
+		</listitem>
+		<listitem>
+			<para>
+				enable multi-core power-saving (part of the <systemitem>laptop-battery-powersave</systemitem> profile):
+			</para>
+<screen><command>echo Y &gt; /sys/module/snd_ac97_codec/parameters/power_save</command></screen>
+		</listitem>
+		<listitem>
+			<para>
+				enable USB auto-suspend:
+			</para>
+<screen><command>for i in /sys/bus/usb/devices/*/power/autosuspend; do echo 1 &gt; $i; done</command></screen>
+			<para>
+				Note that USB auto-suspend does not work correctly with all USB devices.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				enable minimum power setting for ALPM (part of the <systemitem>laptop-battery-powersave</systemitem> profile):
+			</para>
+<screen><command>echo min_power &gt; /sys/class/scsi_host/host*/link_power_management_policy</command></screen>
+		</listitem>
+		<listitem>
+			<para>
+				mount filesystem using relatime  (default in Red Hat Enterprise Linux &PRODVER;):
+			</para>
+<screen><command>mount -o remount,relatime <replaceable>mountpoint</replaceable></command></screen>
+		</listitem>
+		<listitem>
+			<para>
+				activate best power saving mode for hard drives (part of the <systemitem>laptop-battery-powersave</systemitem> profile):
+			</para>
+<screen><command>hdparm -B 1 -S 200 /dev/sd*</command></screen>
+		</listitem>
+		<listitem>
+			<para>
+				disable CD-ROM polling (part of the <systemitem>laptop-battery-powersave</systemitem> profile):
+			</para>
+<screen><command>hal-disable-polling --device /dev/scd*</command></screen>
+		</listitem>
+		<listitem>
+			<para>
+				reduce screen brightness to <literal>50</literal> or less, for example:
+			</para>
+<screen><command>xbacklight -set 50</command></screen>
+		</listitem>
+		<listitem>
+			<para>
+				activate DPMS for screen idle:
+			</para>
+<screen><command>xset +dpms; xset dpms 0 0 300</command></screen>
+		</listitem>
+		<listitem>
+			<para>
+				reduce Wi-Fi power levels (part of the <systemitem>laptop-battery-powersave</systemitem> profile):
+			</para>
+<screen><command>for i in /sys/bus/pci/devices/*/power_level ; do echo 5 &gt; $i ; done</command></screen>
+		</listitem>
+		<listitem>
+			<para>
+				deactivate Wi-Fi:
+			</para>
+<screen><command>echo 1 &gt; /sys/bus/pci/devices/*/rf_kill</command></screen>
+		</listitem>
+		<listitem>
+			<para>
+				limit wired network to 100&nbsp;Mbit/s (part of the <systemitem>laptop-battery-powersave</systemitem> profile):
+			</para>
+<screen><command>ethtool -s eth0 advertise 0x0F</command></screen>
+		</listitem>
+	</itemizedlist>
+</section>

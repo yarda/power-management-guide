@@ -1,0 +1,109 @@
+<?xml version='1.0'?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docarticle/xml/4.5/docarticlex.dtd" [
+]>
+
+<section id="basics">
+        <title>Power Management Basics</title>
+	<indexterm>
+		<primary>power management</primary>
+		<secondary>basics</secondary>
+	</indexterm>
+	
+	<indexterm>
+		<primary>basics</primary>
+		<secondary>power management</secondary>
+	</indexterm>
+
+        <para>Effective power management is built on the following principles:</para>
+        
+	<indexterm>
+		<primary>basics</primary>
+		<secondary>principles behind</secondary>
+	</indexterm>
+	
+	<indexterm>
+		<primary>principles behind</primary>
+		<secondary>basics</secondary>
+	</indexterm>
+
+	
+	<formalpara>
+		<title>An idle CPU should only wake up when needed</title>
+		<para>
+			The Red Hat Enterprise Linux 5 kernel used a periodic timer for each CPU. This timer prevents the CPU from truly going idle, as it requires the CPU to process each timer event (which would happen every few milliseconds, depending on the setting), regardless of whether any process was running or not. A large part of effective power management involves reducing the frequency at which CPU wakeups are made.
+		</para>
+	</formalpara>
+	
+	<para>
+		Because of this, the Linux kernel in Red Hat Enterprise Linux &PRODVER; eliminates the periodic timer: as a result, the idle state of a CPU is now <firstterm>tickless</firstterm>. This prevents the CPU from consuming unnecessary power when it is idle. However, benefits from this feature can be offset if your system has applications that create unnecessary timer events. Polling events (such as checks for volume changes, mouse movement, and the like) are examples of such events.
+	</para>
+	
+	<para>
+		Red Hat Enterprise Linux &PRODVER; includes tools with which you can identify and audit applications on the basis of their CPU usage. Refer to <xref linkend="Audit_and_Analysis"/> for details. 
+	</para>
+
+	<formalpara>
+		<title>Unused hardware and devices should be disabled completely</title>
+		<para>
+			This is especially true for devices that have moving parts (for example, hard disks). In addition to this, some applications may leave an unused but enabled device "open"; when this occurs, the kernel assumes that the device is in use, which can prevent the device from going into a power saving state.
+		</para>
+	</formalpara>
+
+	<formalpara>
+	<title>Low activity should translate to low wattage</title>
+		<para>
+			In many cases, however, this depends on modern hardware and correct BIOS configuration. Older system components often do not have support for some of the new features that we now can support in Red Hat Enterprise Linux &PRODVER;. Make sure that you are using the latest official firmware for your systems and that in the power management or device configuration sections of the BIOS the power management features are enabled. Some features to look for include:
+		</para>
+	</formalpara>
+	
+	<itemizedlist>
+		<listitem><para>SpeedStep</para></listitem>
+		<listitem><para>PowerNow!</para></listitem>
+		<listitem><para>Cool'n'Quiet</para></listitem>
+		<listitem><para>ACPI (C state)</para></listitem>
+		<listitem><para>Smart</para></listitem>
+	</itemizedlist>
+	
+	<para>
+		If your hardware has support for these features and they are enabled in the BIOS, Red Hat Enterprise Linux &PRODVER; will use them by default.
+	</para>
+
+	<formalpara>
+		<title>Different forms of CPU states and their effects</title>
+		<para>
+			Modern CPUs together with <firstterm>Advanced Configuration and Power Interface</firstterm> (ACPI) provide different power states. The three different states are:
+		</para>
+	</formalpara>
+	
+	<itemizedlist>
+		<listitem><para>Sleep (C-states)</para></listitem>
+		<listitem><para>Frequency (P-states)</para></listitem>
+		<listitem><para>Heat output (T-states or "thermal states")</para></listitem>
+	</itemizedlist>
+	
+	<para>
+		A CPU running on the lowest sleep state possible consumes the least amount of watts, but it also takes considerably more time to wake it up from that state when needed. In very rare cases this can lead to the CPU having to wake up immediately every time it just went to sleep. This situation results in an effectively permanently busy CPU and loses some of the potential power saving if another state had been used.
+	</para>
+	
+	<formalpara>
+		<title>A turned off machine uses the least amount of power</title>
+		<para>
+			As obvious as this might sound, one of the best ways to actually save power is to turn off systems. For example, your company can develop a corporate culture focused on "green IT" awareness with a guideline to turn of machines during lunch break or when going home. You also might consolidate several physical servers into one bigger server and virtualize them using the virtualization technology we ship with Red Hat Enterprise Linux &PRODVER;.
+		</para>
+	</formalpara>
+
+<!--<para>This same principle applies to other devices attached to the system as well. In general, devices that are never used (for example a sound card on a dedicated web server) should be completely disabled. But if a specific device is used intermittently, latency-on-wakeup should be considered carefully: 
+	
+	For example, if the system in question is a web server, disabling the sound card completely is a good idea since it is never used. But if -->
+
+<!--
+<note arch=review">
+         <title>PLACEHOLDER</title>
+         <para></para>
+</note>  
+ -->
+ 
+
+
+ 
+</section>

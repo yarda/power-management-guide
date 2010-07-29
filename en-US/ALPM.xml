@@ -1,0 +1,152 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docarticle/xml/4.5/docarticlex.dtd" [
+]>
+
+<section id="ALPM">
+	<title>Aggressive Link Power Management</title>
+	
+	<indexterm>
+		<primary>Aggressive Link Power Management</primary>
+		<secondary>ALPM</secondary>
+	</indexterm>
+	<indexterm>
+		<primary>ALPM</primary>
+		<secondary>Aggressive Link Power Management</secondary>
+	</indexterm>
+	<!-- next 2 indexterms for Advanced Host Controller Interface -->
+	<indexterm>
+		<primary>Aggressive Link Power Management</primary>
+		<secondary>Advanced Host Controller Interface</secondary>
+	</indexterm>	
+	<para>
+		<firstterm>Aggressive Link Power Management</firstterm> (ALPM) is a power-saving technique that helps the disk save power by setting a SATA link to the disk to a low-power setting during idle time (that is when there is no I/O). ALPM automatically sets the SATA link back to an active power state once I/O requests are queued to that link.
+	</para>
+	<para>
+		Power savings introduced by ALPM come at the expense of disk latency. As such, you should only use ALPM if you expect the system to experience long periods of idle I/O time.
+	</para>
+	
+	
+	<indexterm>
+		<primary>Advanced Host Controller Interface</primary>
+		<secondary>Aggressive Link Power Management</secondary>
+	</indexterm>
+	<!-- next 2 indexterms for AHCI -->
+	<indexterm>
+		<primary>Aggressive Link Power Management</primary>
+		<secondary>AHCI</secondary>
+	</indexterm>
+	<indexterm>
+		<primary>AHCI</primary>
+		<secondary>Aggressive Link Power Management</secondary>
+	</indexterm>
+	<!-- next 2 indexterms for SATA-AHCI -->
+	<indexterm>
+		<primary>Aggressive Link Power Management</primary>
+		<secondary>SATA-AHCI</secondary>
+	</indexterm>
+	<indexterm>
+		<primary>SATA-AHCI</primary>
+		<secondary>Aggressive Link Power Management</secondary>
+	</indexterm>
+	
+	<para>
+		ALPM is only available on SATA controllers that use the <firstterm>Advanced Host Controller Interface</firstterm> (AHCI). For more information about AHCI, refer to <ulink url="http://www.intel.com/technology/serialata/ahci.htm"/>.
+	</para>
+	<para>
+		When available, ALPM is enabled by default. ALPM has three modes:
+	</para>
+	
+<formalpara>
+	<title>min_power</title>
+<!-- next 2 indexterms for min_power -->
+
+<indexterm>
+<primary>Aggressive Link Power Management</primary>
+<secondary>min_power</secondary>
+</indexterm>
+
+<indexterm>
+<primary>min_power</primary>
+<secondary>Aggressive Link Power Management</secondary>
+</indexterm>
+
+
+<!-- next 2 indexterms for SLUMBER -->
+
+<indexterm>
+<primary>Aggressive Link Power Management</primary>
+<secondary>SLUMBER</secondary>
+</indexterm>
+
+<indexterm>
+<primary>SLUMBER</primary>
+<secondary>Aggressive Link Power Management</secondary>
+</indexterm>	
+	<para>This mode sets the link to its lowest power state (SLUMBER) when there is no I/O on the disk. This mode is useful for times when an extended period of idle time is expected.</para>
+</formalpara>
+
+<formalpara>
+	<title>medium_power</title>
+<!-- next 2 indexterms for medium_power -->
+
+<indexterm>
+<primary>Aggressive Link Power Management</primary>
+<secondary>medium_power</secondary>
+</indexterm>
+
+<indexterm>
+<primary>medium_power</primary>
+<secondary>Aggressive Link Power Management</secondary>
+</indexterm>
+
+
+<!-- next 2 indexterms for PARTIAL -->
+
+<indexterm>
+<primary>Aggressive Link Power Management</primary>
+<secondary>PARTIAL</secondary>
+</indexterm>
+
+<indexterm>
+<primary>PARTIAL</primary>
+<secondary>Aggressive Link Power Management</secondary>
+</indexterm>	
+	<para>This mode sets the link to the second lowest power state (PARTIAL) when there is no I/O on the disk. This mode is designed to allow transitions in link power states (for example during times of intermittent heavy I/O and idle I/O) with as small impact on performance as possible.</para>
+</formalpara>
+
+	<para><command>medium_power</command> mode allows the link to transition between PARTIAL and fully-powered (that is "ACTIVE") states, depending on the load. Note that it is not possible to transition a link directly from PARTIAL to SLUMBER and back; in this case, either power state cannot transition to the other without transitioning through the ACTIVE state first.</para>
+
+<formalpara>
+	<title>max_performance</title>
+<!-- next 2 indexterms for max_performance -->
+
+<indexterm>
+<primary>Aggressive Link Power Management</primary>
+<secondary>max_performance</secondary>
+</indexterm>
+
+<indexterm>
+<primary>max_performance</primary>
+<secondary>Aggressive Link Power Management</secondary>
+</indexterm>	
+	<para>ALPM is disabled; the link does not enter any low-power state when there is no I/O on the disk.</para>
+</formalpara>	
+
+<para>To check whether your SATA host adapters actually support ALPM you can check if the file <filename>/sys/class/scsi_host/host*/link_power_management_policy</filename> exists. To change the settings simply write the values described in this section to these files or display the files to check for the current setting.</para>
+
+<important><title>Important — some settings disable hot plugging</title>
+<!-- next 2 indexterms for hot-plug -->
+
+<indexterm>
+<primary>Aggressive Link Power Management</primary>
+<secondary>hot-plug</secondary>
+</indexterm>
+
+<indexterm>
+<primary>hot-plug</primary>
+<secondary>Aggressive Link Power Management</secondary>
+</indexterm>
+	
+	<para>Setting ALPM to <command>min_power</command> or <command>medium_power</command> will automatically disable the "Hot Plug" feature.</para>
+</important>	
+</section>

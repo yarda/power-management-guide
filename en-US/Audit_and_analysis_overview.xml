@@ -1,0 +1,21 @@
+<?xml version='1.0'?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docarticle/xml/4.5/docarticlex.dtd" [
+]>
+
+<section id="Audit_and_analysis_overview">
+        <title>Audit and analysis overview</title>
+	<indexterm>
+		<primary>auditing</primary>
+		<secondary>overview</secondary>
+	</indexterm>
+	
+	<para>
+		The detailed manual audit, analysis, and tuning of a single system is usually the exception because the time and cost spent to do so typically outweighs the benefits gained from these last pieces of system tuning. However, performing these tasks once for a large number of nearly identical systems where you can reuse the same settings for all systems can be very useful. For example, consider the deployment of thousands of desktop systems, or a HPC cluster where the machines are nearly identical. Another reason to do auditing and analysis is to provide a basis for comparison against which you can identify regressions or changes in system behavior in the future. The results of this analysis can be very helpful in cases where hardware, BIOS, or software updates happen regularly and you want to avoid any surprises with regard to power consumption. Generally, a thorough audit and analysis gives you a much better idea of what is really happening on a particular system.
+	</para>
+	<para>
+		Auditing and analyzing a system with regard to power consumption is relatively hard, even with the most modern systems available. Most systems do not provide the necessary means to measure power use via software. Exceptions exist though: the ILO management console of Hewlett Packard server systems has a power management module that you can access through the web. IBM provides a similar solution in their BladeCenter power management module. On some Dell systems, the IT Assistant offers power monitoring capabilities as well. Other vendors are likely to offer similar capabilities for their server platforms, but as can be seen there is no single solution available that is supported by all vendors. If your system has no inbuilt mechanism to measure power consumption, a few other choices exist. You could install a special power supply for your system that offers power consumption information through USB. The Gigabyte <hardware>Odin GT</hardware> 550&nbsp;W PC power supply is one such example, and software to read out those values under Linux is available externally from <ulink url="http://mgmt.sth.sze.hu/~andras/dev/gopsu/"></ulink>. As a last resort, some external watt meters like the <hardware>Watts up? PRO</hardware> have a USB connector.
+	</para>
+	<para>
+		Direct measurements of power consumption is often only necessary to maximize savings as far as possible. Fortunately, other means are available to measure if changes are in effect or how the system is behaving. This chapter describes the necessary tools.
+	</para>
+</section>

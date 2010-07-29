@@ -1,0 +1,82 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docarticle/xml/4.5/docarticlex.dtd" [
+]>
+
+<section id="cpufreq_governors">
+	<title>Using <command>CPUfreq</command> Governors</title>
+	<indexterm>
+		<primary>CPUfreq</primary>
+	</indexterm>
+	<indexterm>
+		<primary>CPUfreq</primary>
+		<secondary>governors</secondary>
+	</indexterm>
+	
+	<indexterm>
+		<primary>governors</primary>
+		<secondary>CPUfreq</secondary>
+	</indexterm>
+	
+	<indexterm>
+		<primary>CPUfreq</primary>
+		<secondary>governors</secondary>
+		<tertiary>definition</tertiary>
+	</indexterm>
+	
+	<indexterm>
+		<primary>governors</primary>
+		<secondary>CPUfreq</secondary>
+		<tertiary>definition</tertiary>
+	</indexterm>
+	
+	<indexterm>
+		<primary>definition</primary>
+		<secondary>CPUfreq</secondary>
+		<tertiary>governors</tertiary>
+	</indexterm>
+	
+
+	<para>One of the most effective ways to  reduce power consumption and heat output on your system is to use CPUfreq.  CPUfreq — also referred to as CPU speed scaling — allows the clock speed of the processor to be adjusted on the fly. This enables the system to run at a reduced clock speed to save power. The rules for shifting frequencies, whether to a faster or slower clock speed, and when to shift frequencies, are defined by the CPUfreq governor.</para> 
+	
+	<para>The governor defines the power characteristics of the system CPU, which in turn affects CPU performance. Each governor has its own unique behavior, purpose, and suitability in terms of workload. This section describes how to choose and configure a CPUfreq governor, the characteristics of each governor, and what kind of workload each governor is suitable for.</para>
+	
+	<para>The main concerns surrounding power management are:</para>
+	
+	<!-- next 4 indexterms for concerns surrounding power management -->
+	
+	<indexterm>
+		<primary>CPUfreq</primary>
+		<secondary>governors</secondary>
+		<tertiary>concerns surrounding power management</tertiary>
+	</indexterm>
+	
+	<indexterm>
+		<primary>governors</primary>
+		<secondary>CPUfreq</secondary>
+		<tertiary>concerns surrounding power management</tertiary>
+	</indexterm>
+	
+	<indexterm>
+		<primary>concerns surrounding power management</primary>
+		<secondary>CPUfreq</secondary>
+		<tertiary>governors</tertiary>
+	</indexterm>
+		
+	
+	<itemizedlist>
+		<listitem><para>Heat reduction for servers</para></listitem>
+		<listitem><para>Extending battery life for laptops</para></listitem>
+	</itemizedlist>
+	<para>As a rule, lowering the power consumption of a specific component (or of the system as a whole) will lead to lower heat and naturally, performance. As such, you should thoroughly study and test the decrease in performance afforded by any configurations you make, especially for mission-critical systems.</para>
+	
+	<para>The following sections explain how optimal hardware performance benefits your system in terms of energy consumption.</para>	
+	
+	<xi:include href="Governor_Types.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="CPUfreq_Setup.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="Core_Frequency_Tuning.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	
+<!--	
+	<xi:include href="" xmlns:xi="http://www.w3.org/2001/XInclude" />
+-->
+</section>
+

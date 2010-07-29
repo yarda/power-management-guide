@@ -1,0 +1,35 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docarticle/xml/4.5/docarticlex.dtd" [
+]>
+<section id="Other_auditing">
+	<title>Other means for auditing</title>
+	<para>
+		Red Hat Enterprise Linux &PRODVER; offers quite a few more tools with which to perform system auditing and analysis. Most of them can be used as a supplementary sources of information in case you want to verify what you have discovered already or in case you need more in-depth information on certain parts. Many of these tools are used for performance tuning as well. They include:
+	</para>
+	<variablelist>
+		<varlistentry>
+			<term><application>vmstat</application></term>
+			<listitem>
+				<para>
+					<application>vmstat</application> gives you detailed information about processes, memory, paging, block I/O, traps, and CPU activity. Use it to take a closer look at what the system overall does and where it is busy.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><application>iostat</application></term>
+			<listitem>
+				<para>
+					<application>iostat</application> is similar to <application>vmstat</application>, but only for I/O on block devices. It also provides more verbose output and statistics.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><application>blktrace</application></term>
+			<listitem>
+				<para>
+					<application>blktrace</application> is a very detailed block I/O trace program. It breaks down information to single blocks associated with applications. It is very useful in combination with <application>diskdevstat</application>.
+				</para>
+			</listitem>
+		</varlistentry>
+	</variablelist>
+</section>

@@ -1,0 +1,149 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docarticle/xml/4.5/docarticlex.dtd" [
+]>
+<section id="BLTK">
+	<title>Battery Life Tool Kit</title>
+	<para>
+		Red Hat Enterprise Linux 6 introduces the <application>Battery Life Tool Kit</application> (<acronym>BLTK</acronym>), a test suite that simulates and analyzes battery life and performance. <acronym>BLTK</acronym> achieves this by performing sets of tasks that simulate specific user groups and reporting on the results. Although developed specifically to test notebook performance, <acronym>BLTK</acronym> can also report on the performance of desktop computers when started with the <option>-a</option>.
+	</para>
+	<para>
+		BLTK allows you to generate very reproducible workloads that are comparable to real use of a machine. For example, the <literal>office</literal> workload writes a text, corrects things in it, and does the same for a spreadsheet. Running BLTK combined with <application>PowerTOP</application> or any of the other auditing or analysis tool allows you to test if the optimizations you performed have an effect when the machine is actively in use instead of only idling. Because you can run the exact same workload multiple times for different settings, you can compare results for different settings.
+	</para>
+	<para>
+		Install <acronym>BLTK</acronym> with the command:
+	</para>
+<screen><command>yum install bltk</command></screen>
+	<para>
+		Run <acronym>BLTK</acronym> with the command:
+	</para>
+<screen><command>bltk <replaceable>workload</replaceable> <replaceable>options</replaceable></command></screen>
+	<para>
+		For example, to run the <literal>idle</literal> workload for 120 seconds:
+	</para>
+<screen><command>bltk -I -T 120</command></screen>
+	<para>
+		The workloads available by default are:
+	</para>
+	<variablelist>
+		<varlistentry>
+			<term><option>-I</option></term>
+			<term><option>--idle</option></term>
+			<listitem>
+				<para>
+					system is idle, to use as a baseline for comparison with other workloads
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>-R</option></term>
+			<term><option>--reader</option></term>
+			<listitem>
+				<para>
+					simulates reading documents (by default, with <application>Firefox</application>)
+				</para>
+			</listitem>
+		</varlistentry>
+		<!-- not RHEL <varlistentry>
+			<term><option>-D</option></term>
+			<term><option>- -developer</option></term>
+			<listitem>
+				<para>
+					simulates software development
+				</para>
+			</listitem>
+		</varlistentry> -->
+		<varlistentry>
+			<term><option>-P</option></term>
+			<term><option>--player</option></term>
+			<listitem>
+				<para>
+					simulates watching multimedia files from a CD or DVD drive (by default, with <application>mplayer</application>)
+				</para>
+			</listitem>
+		</varlistentry>
+		<!-- not RHEL <varlistentry>
+			<term><option>-G</option></term>
+			<term><option>- -game</option></term>
+			<listitem>
+				<para>
+					simulates 3D gaming with a demo for <application>Unreal Tournament</application> 
+				</para>
+			</listitem>
+		</varlistentry> -->
+		<varlistentry>
+			<term><option>-O</option></term>
+			<term><option>--office</option></term>
+			<listitem>
+				<para>
+					simulates editing documents with the <application>OpenOffice.org</application> suite
+				</para>
+			</listitem>
+		</varlistentry>
+	</variablelist>
+	<!-- TODO <para>
+		You can also have <acronym>BLTK</acronym> analyze a custom workload that you have created:
+	</para>
+	<variablelist>
+		<varlistentry>
+			<term><option>-U <replaceable>path_to_workload</replaceable></option></term>
+			<term><option>- -user <replaceable>path_to_workload</replaceable></option></term>
+			<listitem>
+				<para>
+					workload defined by user
+				</para>
+			</listitem>
+		</varlistentry>
+	</variablelist> -->
+	<para>
+		Other options allow you to specify:
+	</para>
+	<variablelist>
+		<varlistentry>
+			<term><option>-a</option></term>
+			<term><option>--ac-ignore</option></term>
+			<listitem>
+				<para>
+					ignore whether AC power is available (necessary for desktop use)
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>-T <replaceable>number_of_seconds</replaceable></option></term>
+			<term><option>--time <replaceable>number_of_seconds</replaceable></option></term>
+			<listitem>
+				<para>
+					the time (in seconds) over which to run the test; use this option with the <literal>idle</literal> workload
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>-F <replaceable>filename</replaceable></option></term>
+			<term><option>--file <replaceable>filename</replaceable></option></term>
+			<listitem>
+				<para>
+					specifies a file to be used by a particular workload, for example, a file for the <literal>player</literal> workload to play instead of accessing the CD or DVD drive
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>-W <replaceable>application</replaceable></option></term>
+			<term><option>--prog <replaceable>application</replaceable></option></term>
+			<listitem>
+				<para>
+					specifies an application to be used by a particular workload, for example, a browser other than <application>Firefox</application> for the <literal>reader</literal> workload
+				</para>
+			</listitem>
+		</varlistentry>
+	</variablelist>
+	<para>
+		<acronym>BLTK</acronym> supports a large number of more specialized options. For details, refer to the <literal>bltk</literal> man page.
+	</para>
+	<para>
+		<acronym>BLTK</acronym> saves the results that it generates in a directory specified in the <filename>/etc/bltk.conf</filename> configuration file — by default, <filename>~/.bltk/<replaceable>workload</replaceable>.results.<replaceable>number</replaceable>/</filename>. For example, the <filename>~/.bltk/reader.results.002/</filename> directory holds the results of the third test with the <literal>reader</literal> workload (the first test is not numbered). The results are spread across several text files. To condense these results into a format that is easy to read, run:
+	</para>
+<screen><command>bltk_report <replaceable>path_to_results_directory</replaceable></command></screen>
+	<para>
+		The results now appear in a text file named <filename>Report</filename> in the results directory. To view the results in a terminal emulator instead, use the <option>-o</option> option:
+	</para>
+<screen><command>bltk_report -o <replaceable>path_to_results_directory</replaceable></command></screen>
+</section>

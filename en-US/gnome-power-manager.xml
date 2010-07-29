@@ -1,0 +1,35 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docarticle/xml/4.5/docarticlex.dtd" [
+]>
+<section id="gnome-power-manager">
+	<title>GNOME Power Manager</title>
+	<para>
+		<application>GNOME Power Manager</application> is a daemon that is installed as part of the GNOME desktop. Much of the power-management functionality that <application>GNOME Power Manager</application> provided in earlier versions of Red Hat Enterprise Linux has become part of <application>DeviceKit-power</application> in Red Hat Enterprise Linux&nbsp;6 (refer to <xref linkend="devicekit-power"/>. However, <application>GNOME Power Manager</application> remains a front end for that functionality. Through an applet in the system tray, <application>GNOME Power Manager</application> notifies you of changes in your system's power status; for example, a change from battery to AC power. It also reports battery status, and warns you when battery power is low. 
+	</para>
+	<para>
+		<application>GNOME Power Manager</application> also allows you to configure some basic power management settings. To access these settings, click the <application>GNOME Power Manager</application> icon in the system tray, then click <guimenuitem>Preferences</guimenuitem>
+	</para>
+	<para>
+		The <guilabel>Power Management Preferences</guilabel> screen contains three tabs:
+	</para>
+	<itemizedlist>
+		<listitem>
+			<para>
+				<guilabel>On AC Power</guilabel>
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				<guilabel>On Battery Power</guilabel>
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				<guilabel>General</guilabel>
+			</para>
+		</listitem>
+	</itemizedlist>
+	<para>
+		Use the <guilabel>On AC Power</guilabel> and <guilabel>On Battery Power</guilabel> tabs to specify how much time must pass before the display is turned off on an inactive system, how much time must pass before an inactive system is put to sleep, and whether the system should spin down hard disks when not in use. The <guilabel>On Battery Power</guilabel> tab also allows you to set the display brightness and to choose a behavior for a system with a critically low battery. For example, by default, <application>GNOME Power Manager</application> makes a system hibernate when its battery level reaches a critically low level. Use the <guilabel>General</guilabel> tab to set behaviours for the (physical) power button and suspend button on your system, and to specify the circumstances under which the <application>GNOME Power Manager</application> icon should appear in the system tray.
+	</para>
+</section>

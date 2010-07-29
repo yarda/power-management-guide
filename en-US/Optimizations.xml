@@ -1,0 +1,30 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docarticle/xml/4.5/docarticlex.dtd" [
+]>
+<section id="Optimizations_in_User_Space">
+	<title>Optimizations in User Space</title>
+	<para>
+		Reducing the amount of work performed by system hardware is fundamental to saving power. Therefore, although the changes described in <xref linkend="Core_Infrastructure"/> permit the system to operate in various states of reduced power consumption, applications in user space that request unnecessary work from system hardware prevent the hardware from entering those states. During the development of Red Hat Enterprise Linux &PRODVER;, audits were undertaken in the following areas to reduce unnecessary demands on hardware:
+	</para>
+	
+	<formalpara>
+		<title>Reduced wakeups</title>
+		<para>
+			Red Hat Enterprise Linux &PRODVER; uses a <firstterm>tickless kernel</firstterm> (refer to <xref linkend="Tickless-kernel"/>), which allows the CPUs to remain in deeper idle states longer. However, the <firstterm>timer tick</firstterm> is not the only source of excessive CPU wakeups, and function calls from applications can also prevent the CPU from entering or remaining in idle states. Unnecessary function calls were reduced in over 50 applications.  
+		</para>
+	</formalpara>
+	<formalpara>
+		<title>Reduced storage and network IO</title>
+		<para>
+			Input or output (IO) to storage devices and network interfaces forces devices to consume power. In storage and network devices that feature reduced power states when idle (for example, ALPM or ASPM), this traffic can prevent the device from entering or remaining in an idle state, and can prevent hard drives from spinning down when not in use. Excessive and unnecessary demands on  storage have been minimized in several applications. In particular, those demands that prevented hard drives from spinning down.
+		</para>
+	</formalpara>
+	
+	<formalpara>
+		<title>Initscript audit</title>
+		<para>
+			Services that start automatically whether required or not have great potential to waste system resources. Services instead should default to "off" or "on demand" wherever possible. For example, the <application>BlueZ</application> service that enables Bluetooth support previously ran automatically when the system started, whether Bluetooth hardware was present or not. The <application>BlueZ</application> initscript now checks that Bluetooth hardware is present on the system before starting the service.
+		</para>
+	</formalpara>
+		
+</section>

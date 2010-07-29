@@ -1,0 +1,56 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docarticle/xml/4.5/docarticlex.dtd" [
+]>
+<section id="RFKill">
+	<title>RFKill</title>
+	
+	<indexterm>
+		<primary>RFKill (kernel subsystem)</primary>
+	</indexterm>
+	<indexterm>
+		<primary>rfkill (application)</primary>
+	</indexterm>
+	<indexterm>
+		<primary>kernel</primary>
+		<secondary>subsystems</secondary>
+		<tertiary>RFKill</tertiary>
+	</indexterm>
+	<indexterm>
+		<primary>applications</primary>
+		<secondary>rfkill</secondary>
+	</indexterm>
+	
+	<para>
+		Many computer systems contain radio transmitters, including Wi-Fi, Bluetooth, and 3G devices. These devices consume power, which is wasted when the device is not in use. 
+	</para>
+	<para>
+		<firstterm>RFKill</firstterm> is a subsystem in the Linux kernel that provides an interface through which radio transmitters in a computer system can be queried, activated, and deactivated. When transmitters are deactivated, they can be placed in a state where software can reactive them (a <firstterm>soft block</firstterm>) or where software cannot reactive them (a <firstterm>hard block</firstterm>).
+	</para>
+	<para>
+		The RFKill core provides the application programming interface (API) for the subsystem. Kernel drivers that have been designed to support RFkill use this API to register with the kernel, and include methods for enabling and disabling the device. Additionally, the RFKill core provides notifications that user applications can interpret and ways for user applications to query transmitter states. 
+	</para>
+	<para>
+		The RFKill interface is located at <filename>/dev/rfkill</filename>, which contains the current state of all radio transmitters on the system. Each device has its current RFKill state registered in <filename>sysfs</filename>. Additionally, RFKill issues <firstterm>uevents</firstterm> for each change of state in an RFKill-enabled device. 
+	</para>
+	<para>
+		<application>Rfkill</application> is a command-line tool with which you can query and change RFKill-enabled devices on the system. To obtain the tool, install the <package>rfkill</package> package.
+	</para>
+	<para>
+		Use the command <command>rfkill list</command> to obtain a list of devices, each of which has an <firstterm>index number</firstterm> associated with it, starting at <literal>0</literal>. You can use this index number to tell <application>rfkill</application> to block or unblock a device, for example:
+	</para>
+<screen><command>rfkill block 0</command></screen>
+	<para>
+		blocks the first RFKill-enabled device on the system. 
+	</para>
+	<para>
+		You can also use <application>rfkill</application> to block certain categories of devices, or all RFKill-enabled devices. For example:
+	</para>
+<screen><command>rfkill block wifi</command></screen>
+	<para>
+		blocks all Wi-Fi devices on the system. To block all RFKill-enabled devices, run:
+	</para>
+<screen><command>rfkill block all</command></screen>
+	<para>
+		To unblock devices, run <command>rfkill unblock</command> instead of <command>rfkill block</command>. To obtain a full list of device categories that <application>rfkill</application> can block, run <command>rfkill help</command>
+	</para>
+</section>

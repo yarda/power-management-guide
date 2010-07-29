@@ -1,0 +1,49 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docarticle/xml/4.5/docarticlex.dtd" [
+]>
+<section id="C-States">
+	<title>CPU Idle States</title>
+	<para>
+		CPUs with the x86 architecture support various states in which parts of the CPU are deactivated or run at lower performance settings. These states, known as <firstterm>C-states</firstterm>, allow systems to save power by partially deactivating CPUs that are not in use. C-states are numbered from C0 upwards, with higher numbers representing decreased CPU functionality and greater power saving. C-States of a given number are broadly similar across processors, although the exact details of the specific feature sets of the state may vary between processor families. C-States 0–3 are defined as follows: 
+	</para>
+	<variablelist>
+		<varlistentry>
+			<term>C0</term>
+			<listitem>
+				<para>
+					the operating or running state. In this state, the CPU is working and not idle at all.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>C1</term>
+			<term>Halt</term>
+			<listitem>
+				<para>
+					a state where the processor is not executing any instructions but is typically not in a lower power state. The CPU can continue processing with practically no delay. All processors offering C-States need to support this state. Pentium&nbsp;4 processors support an enhanced C1 state called C1E that actually is a state for lower power consumption. 
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>C2</term>
+			<term>Stop-Clock</term>
+			<listitem>
+				<para>
+					a state where the the clock is frozen for this processor but it keeps the complete state for its registers and caches, so after starting the clock again it can immediately start processing again. This is an optional state.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>C3</term>
+			<term>Sleep</term>
+			<listitem>
+				<para>
+					a state where the processor really goes to sleep and doesn't need to keep it's cache up to date. Waking up from this state takes considerably longer than from C2 due to this. Again this is an optional state.
+				</para>
+			</listitem>
+		</varlistentry>
+	</variablelist>
+	<para>
+		Recent Intel CPUs with the "Nehalem" microarchitecture feature a new C-State, C6, which can reduce the voltage supply of a CPU to zero, but typically reduces power consumption by between 80% and 90%. The kernel in Red Hat Enterprise Linux&nbsp;&PRODVER; includes optimizations for this new C-State.
+	</para>
+</section>

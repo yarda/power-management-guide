@@ -1,0 +1,15 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docarticle/xml/4.5/docarticlex.dtd" [
+]>
+<section id="Suspend_and_Resume">
+	<title>Suspend and Resume</title>
+	<para>
+		When a system is suspended, the kernel calls on drivers to store their states and then unloads them. When the system is resumed, it reloads these drivers, which attempt to reprogram their devices. The drivers' ability to accomplish this task determines whether the system can be resumed successfully. 
+	</para>
+	<para>
+		Video drivers are particularly problematic in this regard, because the <firstterm>Advanced Configuration and Power Interface</firstterm> (ACPI) specification does not require system firmware to be able to reprogram video hardware. Therefore, unless video drivers are able to program hardware from a completely uninitialized state, they may prevent the system from resuming.
+	</para>
+	<para>
+		Red Hat Enterprise Linux &PRODVER; includes greater support for new graphics chipsets, which ensures that suspend and resume will work on a greater number of platforms. In particular, support for NVIDIA chipsets has been greatly improved; in particular for the GeForce&nbsp;8800 series.
+	</para>
+</section>

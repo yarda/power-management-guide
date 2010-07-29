@@ -1,0 +1,65 @@
+<?xml version='1.0'?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docarticle/xml/4.5/docarticlex.dtd" [
+]>
+<book status="draft">
+	
+ 	<xi:include href="Book_Info.xml" xmlns:xi="http://www.w3.org/2001/XInclude" /> 
+	<xi:include href="Preface.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="Importance.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	
+	
+	<!-- 
+	<xi:include href="Virtualization.xml" xmlns:xi="http://www.w3.org/2001/XInclude" /> 
+	<xi:include href="Choosing_Hardware.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="Turn_Off_Machines.xml" xmlns:xi="http://www.w3.org/2001/XInclude" /> 
+	<xi:include href="Turn_Off_Unused_Hardware.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="Enable_CPU_Scaling.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="Slow_Network_Card.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="Set_HDD_To_Spindown.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="Power_Off_Screens.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	-->
+	
+	<chapter id="Audit_and_Analysis">
+		<title>Power management auditing and analysis</title>
+		<xi:include href="Audit_and_analysis_overview.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+		<xi:include href="Powertop.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+		<xi:include href="diskdevstat_and_netdevstat.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+		<xi:include href="BLTK.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+		<xi:include href="Tuned.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+		<xi:include href="devicekit-power.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+		<xi:include href="gnome-power-manager.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+		<xi:include href="Other_auditing.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	</chapter>
+	
+	<chapter id="Core_Infrastructure">
+		<title>Core Infrastructure and Mechanics</title>
+		<xi:include href="CPU_Idle_States.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+		<xi:include href="CPUfreq_Governors.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+		<!-- <xi:include href="Video_Driver.xml" xmlns:xi="http://www.w3.org/2001/XInclude" /> -->
+		<xi:include href="Suspend_Resume.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+		<xi:include href="Tickless_Kernel.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+		<xi:include href="ASPM.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+		<xi:include href="ALPM.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+		<xi:include href="Relatime_Drive_Access.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+		<xi:include href="Power_Capping.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+		<xi:include href="Enhanced_Graphics.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+		<xi:include href="RFKill.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+		<xi:include href="Optimizations.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	</chapter>
+	
+	<chapter id="Use_Cases">
+		<title>Use Cases</title>
+		<para>
+			This chapter describes two types of use case to illustrate the analysis and configuration methods described elsewhere in this guide. The first example considers typical servers and the second is a typical laptop.
+		</para>
+		<xi:include href="Example_Server.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+		<xi:include href="Example_Laptop.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	</chapter>
+	
+	<xi:include href="Developer_Tips.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	
+	<xi:include href="Revision_History.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+
+<!-- <index/> -->
+</book>
+

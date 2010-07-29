@@ -1,0 +1,70 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docarticle/xml/4.5/docarticlex.dtd" [
+]>
+<section id="devicekit-power">
+	<title>DeviceKit-power and devkit-power</title>
+	<para>
+		In Red Hat Enterprise Linux &PRODVER; <application>DeviceKit-power</application> assumes the power management functions that were part of <application>HAL</application> and some of the functions that were part of <application>GNOME Power Manager</application> in previous releases of Red Hat Enterprise Linux (refer also to <xref linkend="gnome-power-manager"/>. <application>DeviceKit-power</application> provides a daemon, an API, and a set of command-line tools. Each power source on the system is represented as a device, whether it is a physical device or not. For example, a laptop battery and an AC power source are both represented as devices. 
+	</para>
+	<para>
+		You can access the command-line tools with the <command>devkit-power</command> command and the following options:
+	</para>
+	<variablelist>
+		<varlistentry>
+			<term><option>--enumerate</option></term>
+			<term><option>-e</option></term>
+			<listitem>
+				<para>
+					displays an object path for each power devices on the system, for example:
+				</para>
+<screen><computeroutput>/org/freedesktop/DeviceKit/power/devices/line_power_AC</computeroutput>
+<computeroutput>/org/freedesktop/UPower/DeviceKit/power/battery_BAT0</computeroutput></screen>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>--dump</option></term>
+			<term><option>-d</option></term>
+			<listitem>
+				<para>
+					displays the parameters for all power devices on the system.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>--wakeups</option></term>
+			<term><option>-w</option></term>
+			<listitem>
+				<para>
+					displays the CPU wakeups on the system.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>--monitor</option></term>
+			<term><option>-m</option></term>
+			<listitem>
+				<para>
+					monitors the system for changes to power devices, for example, the connection or disconnection of a source of AC power, or the depletion of a battery. Press <keycombo><keycap>Ctrl</keycap><keycap>C</keycap></keycombo> to stop monitoring the system.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>--monitor-detail</option></term>
+			<listitem>
+				<para>
+					monitors the system for changes to power devices, for example, the connection or disconnection of a source of AC power, or the depletion of a battery. The <option>--monitor-detail</option> option presents more detail than the <option>--monitor</option> option. Press <keycombo><keycap>Ctrl</keycap><keycap>C</keycap></keycombo> to stop monitoring the system.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><option>--show-info <replaceable>object_path</replaceable></option></term>
+			<term><option>-i <replaceable>object_path</replaceable></option></term>
+			<listitem>
+				<para>
+					displays all information available for a particular object path. For example, to obtain information about a battery on your system represented by the object path  <systemitem>/org/freedesktop/UPower/DeviceKit/power/battery_BAT0</systemitem>, run:
+				</para>
+<screen><command>devkit-power -i /org/freedesktop/UPower/DeviceKit/power/battery_BAT0</command></screen>
+			</listitem>
+		</varlistentry>
+	</variablelist>
+</section>

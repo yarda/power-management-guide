@@ -1,0 +1,37 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docarticle/xml/4.5/docarticlex.dtd" [
+]>
+<section id="Power_Capping">
+	<title>Power Capping</title>
+	<para>
+		Red Hat Enterprise Linux &PRODVER; supports the power capping features found in recent hardware, such as HP <firstterm>Dynamic Power Capping</firstterm> (DPC), and Intel Node Manager (NM) technology. Power capping allows administrators to limit the power consumed by servers, but it also allows managers to plan data centers more efficiently, because the risk of overloading existing power supplies is greatly diminished. Managers can place more servers within the same physical footprint and have confidence that if server power consumption is capped, the demand for power during heavy load will not exceed the power available.
+	</para>
+	
+	<formalpara>
+		<title>HP Dynamic Power Capping</title>
+		<para>
+			Dynamic Power Capping is a feature available on select ProLiant and BladeSystem servers that allows system administrators to cap the power consumption of a server or a group of servers. The cap is a definitive limit that the server will not exceed, regardless of its current workload. The cap has no effect until the server reaches its power consumption limit. At that point, a management processor adjusts CPU P-states and clock throttling to limit the power consumed. 
+		</para>
+	</formalpara>
+
+	<para>
+		Dynamic Power Capping modifies CPU behavior independently of the operating system, however, HP's <firstterm>integrated Lights-Out 2</firstterm> (iLO2) firmware allows operating systems access to the management processor and therefore applications in user space can query the management processor. The kernel used in Red Hat Enterprise Linux &PRODVER; includes a driver for HP iLO and iLO2 firmware, which allows programs to query management processors at <filename>/dev/hpilo/d<replaceable>X</replaceable>ccb<replaceable>N</replaceable></filename>. The kernel also includes an extension of the <systemitem>hwmon</systemitem> <systemitem>sysfs</systemitem> interface to support power capping features, and a <systemitem>hwmon</systemitem> driver for ACPI 4.0 power meters that use the <systemitem>sysfs</systemitem> interface. Together, these features allow the operating system and user-space tools to read the value configured for the power cap, together with the current power usage of the system.
+	</para>
+	
+	<para>
+		For further details of HP Dynamic Power Capping, refer to <citetitle>HP Power Capping and HP Dynamic Power Capping for ProLiant Servers</citetitle>, available from <ulink url="http://h20000.www2.hp.com/bc/docs/support/SupportManual/c01549455/c01549455.pdf"></ulink>
+	</para>
+	
+	<formalpara>
+		<title>Intel Node Manager</title>
+		<para>
+			Intel Node Manager imposes a power cap on systems, using processor P-states and T-states to limit CPU performance and therefore power consumption. By setting a power management policy, administrators can configure systems to consume less power during times when system loads are low, for example, at night or on weekends.  
+		</para>
+	</formalpara>
+	<para>
+		Intel Node Manager adjusts CPU performance using <firstterm>Operating System-directed configuration and Power Management</firstterm>  (OSPM) through the standard <firstterm>Advanced Configuration and Power Interface</firstterm>. When Intel Node Manager notifies the OSPM driver of changes to T-states, the driver makes corresponding changes to processor P-states. Similarly, when Intel Node Manager notifies the OSPM driver of changes to P-states, the driver changes T-states accordingly. These changes happen automatically and require no further input from the operating system. Administrators configure and monitor Intel Node Manager with <firstterm>Intel Data Center Manager</firstterm> (DCM) software. 
+	</para>
+	<para>
+		For further details of Intel Node Manager, refer to <citetitle>Node Manager — A Dynamic Approach To Managing Power In The Data Center</citetitle>, available from <ulink url="http://communities.intel.com/docs/DOC-4766"></ulink>
+	</para>
+</section>

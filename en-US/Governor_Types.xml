@@ -1,0 +1,281 @@
+<?xml version='1.0'?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docarticle/xml/4.5/docarticlex.dtd" [
+	  ]>
+
+<section id="governor_types">
+	<title>CPUfreq Governor Types</title>
+<indexterm>
+<primary>CPUfreq</primary>
+<secondary>governor types</secondary>
+</indexterm>
+
+<indexterm>
+<primary>governor types</primary>
+<secondary>CPUfreq</secondary>
+</indexterm>
+<!-- next 2 indexterms for types of governors -->
+
+<indexterm>
+<primary>CPUfreq</primary>
+<secondary>types of governors</secondary>
+</indexterm>
+
+<indexterm>
+<primary>types of governors</primary>
+<secondary>CPUfreq</secondary>
+</indexterm>
+	
+	<para>This section lists and describes the different types of CPUfreq governors available in Red Hat Enterprise Linux &PRODVER;.</para>
+
+<formalpara><title>cpufreq_performance</title>
+<indexterm>
+<primary>CPUfreq</primary>
+<secondary>governor types</secondary>
+<tertiary>cpufreq_performance</tertiary>
+</indexterm>
+
+<indexterm>
+<primary>governor types</primary>
+<secondary>CPUfreq</secondary>
+<tertiary>cpufreq_performance</tertiary>
+</indexterm>
+
+<indexterm>
+<primary>cpufreq_performance</primary>
+<secondary>CPUfreq</secondary>
+<tertiary>governor types</tertiary>
+</indexterm>	
+
+
+<indexterm>
+	<primary>CPUfreq</primary>
+	<secondary>governor types</secondary>
+	<tertiary>Performance governor</tertiary>
+</indexterm>
+
+<indexterm>
+	<primary>governor types</primary>
+	<secondary>CPUfreq</secondary>
+	<tertiary>Performance governor</tertiary>
+</indexterm>
+
+<indexterm>
+	<primary>Performance governor</primary>
+	<secondary>CPUfreq</secondary>
+	<tertiary>governor types</tertiary>
+</indexterm>
+	<para>The Performance governor forces the CPU to use the highest possible clock frequency. This frequency will be statically set, and will not change. As such, this particular governor offers <emphasis>no power saving benefit</emphasis>. It is only suitable for hours of heavy workload, and even then only during times wherein the CPU is rarely (or never) idle.</para>
+</formalpara>
+
+<formalpara><title>cpufreq_powersave</title>
+	<!-- next 4 indexterms for cpufreq_powersave -->
+	
+	<indexterm>
+		<primary>CPUfreq</primary>
+		<secondary>governor types</secondary>
+		<tertiary>cpufreq_powersave</tertiary>
+	</indexterm>
+	
+	<indexterm>
+		<primary>governor types</primary>
+		<secondary>CPUfreq</secondary>
+		<tertiary>cpufreq_powersave</tertiary>
+	</indexterm>
+	
+	<indexterm>
+		<primary>cpufreq_powersave</primary>
+		<secondary>CPUfreq</secondary>
+		<tertiary>governor types</tertiary>
+	</indexterm>
+	
+	
+	<!-- next 4 indexterms for Powersave governor -->
+	
+	<indexterm>
+		<primary>CPUfreq</primary>
+		<secondary>governor types</secondary>
+		<tertiary>Powersave governor</tertiary>
+	</indexterm>
+	
+	<indexterm>
+		<primary>governor types</primary>
+		<secondary>CPUfreq</secondary>
+		<tertiary>Powersave governor</tertiary>
+	</indexterm>
+	
+	<indexterm>
+		<primary>Powersave governor</primary>
+		<secondary>CPUfreq</secondary>
+		<tertiary>governor types</tertiary>
+</indexterm>	
+	<para>By contrast, the Powersave governor forces the CPU to use the lowest possible clock frequency. This frequency will be statically set, and will not change. As such, this particular governor offers maximum power savings, but at the cost of the <emphasis>lowest CPU performance</emphasis>.</para>
+</formalpara>	
+
+	<para>The term "powersave" can sometimes be deceiving, though, since (in principle) a slow CPU on full load consumes more power than a fast CPU that is not loaded. As such, while it may be advisable to set the CPU to use the Powersave governor during times of expected low activity, any unexpected high loads during that time can cause the system to actually consume more power.</para>
+	
+	<para>The Powersave governor is, in simple terms, more of a "speed limiter" for the CPU than a "power saver". It is most useful in systems and environments where overheating can be a problem.</para>
+
+<formalpara><title>cpufreq_ondemand</title>
+<!-- next 4 indexterms for cpufreq_ondemand -->
+
+<indexterm>
+<primary>CPUfreq</primary>
+<secondary>governor types</secondary>
+<tertiary>cpufreq_ondemand</tertiary>
+</indexterm>
+
+<indexterm>
+<primary>governor types</primary>
+<secondary>CPUfreq</secondary>
+<tertiary>cpufreq_ondemand</tertiary>
+</indexterm>
+
+<indexterm>
+<primary>cpufreq_ondemand</primary>
+<secondary>CPUfreq</secondary>
+<tertiary>governor types</tertiary>
+</indexterm>
+
+
+<!-- next 4 indexterms for Ondemand governor -->
+
+<indexterm>
+<primary>CPUfreq</primary>
+<secondary>governor types</secondary>
+<tertiary>Ondemand governor</tertiary>
+</indexterm>
+
+<indexterm>
+<primary>governor types</primary>
+<secondary>CPUfreq</secondary>
+<tertiary>Ondemand governor</tertiary>
+</indexterm>
+
+<indexterm>
+<primary>Ondemand governor</primary>
+<secondary>CPUfreq</secondary>
+<tertiary>governor types</tertiary>
+</indexterm>	
+	<para>The Ondemand governor is a dynamic governor that allows the CPU to achieve maximum clock frequency when system load is high, and also minimum clock frequency when the system is idle. While this allows the system to adjust power consumption accordingly with respect to system load, it does so at the expense of <emphasis>latency between frequency switching</emphasis>. As such, latency can offset any performance/power saving benefits offered by the Ondemand governor if the system switches between idle and heavy workloads too often.</para>
+</formalpara>	
+
+<para>For most systems, the Ondemand governor can provide the best compromise between heat emission, power consumption, performance, and manageability. When the system is only busy at specific times of the day, the Ondemand governor will automatically switch between maximum and minimum frequency depending on the load without any further intervention.</para>
+<!--	build on this further and uncomment when tunables are finished
+	<para>For the most part, the Ondemand governor can provide the best compromise between heat emission, power consumption, performance, and manageability. </para>-->
+<formalpara><title>cpufreq_userspace</title>
+<!-- next 4 indexterms for cpufreq_userspace -->
+
+<indexterm>
+<primary>CPUfreq</primary>
+<secondary>governor types</secondary>
+<tertiary>cpufreq_userspace</tertiary>
+</indexterm>
+
+<indexterm>
+<primary>governor types</primary>
+<secondary>CPUfreq</secondary>
+<tertiary>cpufreq_userspace</tertiary>
+</indexterm>
+
+<indexterm>
+<primary>cpufreq_userspace</primary>
+<secondary>CPUfreq</secondary>
+<tertiary>governor types</tertiary>
+</indexterm>
+
+
+<!-- next 4 indexterms for Userspace governor -->
+
+<indexterm>
+<primary>CPUfreq</primary>
+<secondary>governor types</secondary>
+<tertiary>Userspace governor</tertiary>
+</indexterm>
+
+<indexterm>
+<primary>governor types</primary>
+<secondary>CPUfreq</secondary>
+<tertiary>Userspace governor</tertiary>
+</indexterm>
+
+<indexterm>
+<primary>Userspace governor</primary>
+<secondary>CPUfreq</secondary>
+<tertiary>governor types</tertiary>
+</indexterm>	
+	<para>The Userspace governor allows userspace programs (or any process running as root) to set the frequency. This governor is normally used in conjunction with the <command>cpuspeed</command> daemon. Of all the governors, Userspace is the most customizable; and depending on how it is configured, it can offer the best balance between performance and consumption for your system.</para>
+</formalpara>
+
+<formalpara><title>cpufreq_conservative</title>
+<!-- next 4 indexterms for cpufreq_conservative -->
+
+<indexterm>
+<primary>CPUfreq</primary>
+<secondary>governor types</secondary>
+<tertiary>cpufreq_conservative</tertiary>
+</indexterm>
+
+<indexterm>
+<primary>governor types</primary>
+<secondary>CPUfreq</secondary>
+<tertiary>cpufreq_conservative</tertiary>
+</indexterm>
+
+<indexterm>
+<primary>cpufreq_conservative</primary>
+<secondary>CPUfreq</secondary>
+<tertiary>governor types</tertiary>
+</indexterm>
+
+
+<!-- next 4 indexterms for Conservative governor -->
+
+<indexterm>
+<primary>CPUfreq</primary>
+<secondary>governor types</secondary>
+<tertiary>Conservative governor</tertiary>
+</indexterm>
+
+<indexterm>
+<primary>governor types</primary>
+<secondary>CPUfreq</secondary>
+<tertiary>Conservative governor</tertiary>
+</indexterm>
+
+<indexterm>
+<primary>Conservative governor</primary>
+<secondary>CPUfreq</secondary>
+<tertiary>governor types</tertiary>
+</indexterm>	
+	<para>Like the Ondemand governor, the Conservative governor also adjusts the clock frequency according to usage (like the Ondemand governor). However, while the Ondemand governor does so in a more aggressive manner (that is from maximum to minimum and back), the Conservative governor switches between frequencies more gradually.</para>
+</formalpara>	
+	<para>This means that the Conservative governor will adjust to a clock frequency that it deems fitting for the load, rather than simply choosing between maximum and minimum. While this can possibly provide significant savings in power consumption, it does so at an ever <emphasis>greater latency</emphasis> than the Ondemand governor.</para>
+
+<note>
+	<title>Note</title>
+	
+<indexterm>
+<primary>cron</primary>
+<secondary>CPUfreq</secondary>
+</indexterm>
+
+<indexterm>
+<primary>CPUfreq</primary>
+<secondary>cron</secondary>
+</indexterm>
+<!-- next 2 indexterms for scheduled governor switching -->
+
+<indexterm>
+<primary>cron</primary>
+<secondary>scheduled governor switching</secondary>
+</indexterm>
+
+<indexterm>
+<primary>scheduled governor switching</primary>
+<secondary>cron</secondary>
+</indexterm>	
+	<para>You can enable a governor using <command>cron</command> jobs. This allows you to automatically set specific governors during specific times of the day. As such, you can specify a low-frequency governor during idle times (for example after work hours) and return to a higher-frequency governor during hours of heavy workload.</para>
+	
+	<para>For instructions on how to enable a specific governor, refer to <xref linkend="enabling_a_cpufreq_governor"/> in <xref linkend="cpufreq_setup"/>.</para>
+</note>
+</section>

@@ -1,0 +1,37 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docarticle/xml/4.5/docarticlex.dtd" [
+]>
+<section id="Enhanced_Graphics_Power_Management">
+	<title>Enhanced Graphics Power Management</title>
+	<para>
+		Red Hat Enterprise Linux &PRODVER; saves power on graphics and display devices by eliminating several sources of unnecessary consumption.
+	</para>
+	
+	<formalpara>
+		<title>LVDS reclocking</title>
+		<para>
+			<firstterm>Low-voltage differential signaling</firstterm> (LVDS) is an system for carrying electronic signals over copper wire. One significant application of the system is to transmit pixel information to <firstterm>liquid crystal display</firstterm> (LCD) screens in notebook computers. All displays have a <firstterm>refresh rate</firstterm> — the rate at which they receive fresh data from a graphics controller and redraw the image on the screen. Typically, the screen receives fresh data sixty times per second (a frequency of 60&nbsp;Hz). When a screen and graphics controller are linked by LVDS, the LVDS system uses power on every refresh cycle. When idle, the refresh rate of many LCD screens can be dropped to 30&nbsp;Hz without any noticeable effect (unlike <firstterm>cathode ray tube</firstterm> (CRT) monitors, where a decrease in refresh rate produces a characteristic flicker). The driver for Intel graphics adapters built into the kernel used in Red Hat Enterprise Linux &PRODVER; performs this <firstterm>downclocking</firstterm> automatically, and saves around 0.5&nbsp;W when the screen is idle. 
+		</para>
+	</formalpara>
+	
+	<formalpara>
+		<title>Enabling memory self-refresh</title>
+		<para>
+			<firstterm>Synchronous dynamic random access memory</firstterm> (SDRAM) — as used for video memory in graphics adapters — is recharged thousands of times per second so that individual memory cells retain the data that is stored in them. Apart from its main function of managing data as it flows in and out of memory, the memory controller is normally responsible for initiating these refresh cycles. However, SDRAM also has a low-power <firstterm>self-refresh</firstterm> mode. In this mode, the memory uses an internal timer to generate its own refresh cycles, which allows the system to shut down the memory controller without endangering data currently held in memory. The kernel used in Red Hat Enterprise Linux &PRODVER; can trigger memory self-refresh in Intel graphics adapters when they are idle, which saves around 0.8&nbsp;W. 
+		</para>
+	</formalpara>
+	
+	<formalpara>
+		<title>GPU clock reduction</title>
+		<para>
+			Typical graphical processing units (GPUs) contain internal clocks that govern various parts of their internal circuitry. The kernel used in Red Hat Enterprise Linux &PRODVER; can reduce the frequency of some of the internal clocks in Intel and ATI GPUs. Reducing the number of cycles that GPU components perform in a given time saves the power that they would have consumed in the cycles that they did not have to perform. The kernel automatically reduces the speed of these clocks when the GPU is idle, and increases it when GPU activity increases. Reducing GPU clock cycles can save up to 5&nbsp;W.
+		</para>
+	</formalpara>
+	
+	<formalpara>
+		<title>GPU powerdown</title>
+		<para>
+			The Intel and ATI graphics drivers in Red Hat Enterprise Linux &PRODVER; can detect when no monitor is attached to an adapter and therefore shut down the GPU completely. This feature is especially significant for servers which do not have monitors attached to them regularly.
+		</para>
+	</formalpara>
+</section>

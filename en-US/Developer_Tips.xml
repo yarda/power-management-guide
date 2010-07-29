@@ -1,0 +1,173 @@
+<?xml version='1.0'?>
+<!DOCTYPE appendix PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docarticle/xml/4.5/docarticlex.dtd" [
+]>
+
+<appendix id="Developer_Tips">
+        <title>Tips for Developers</title>
+        
+        <para>
+		Every good programming textbook covers problems with memory allocation and the performance of specific functions. As you develop your software, be aware of issues that might increase power consumption on the systems on which the software runs. Although these considerations do not affect every line of code, you can optimize your code in areas which are frequent bottlenecks for performance. 
+        </para>
+        <para>
+		Some techniques that are often problematic include:
+        </para>
+        <itemizedlist>
+		<listitem>
+			<para>
+				using threads.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				unnecessary CPU wake-ups and not using wake-ups efficiently. If you must wake up, do everything at once (race to idle) and as quickly as possible.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				using <function>[f]sync()</function> unnecessarily.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				unnecessary active polling or using short, regular timeouts. (React to events instead).
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				not using wake-ups efficiently.  
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				inefficient disk access. Use large buffers to avoid frequent disk access. Write one large block at a time.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				inefficient use of timers. Group timers across applications (or even across systems) if possible.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				 excessive I/O, power consumption, or memory usage (including memory leaks)
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				 performing unnecessary computation.
+			</para>
+		</listitem>
+        </itemizedlist>
+        
+        <para>
+		The following sections examine some of these areas in greater detail.
+        </para>
+
+
+	<section id="Developer_Tips-Threads">
+		<title>Using Threads</title>
+		
+		<para>
+			It is widely believed that using threads makes applications perform better and faster, but this is not true in every case.
+		</para>
+		
+		<formalpara>
+			<title>Python</title>
+			<para>
+				Python uses the Global Lock Interpreter<footnote><para><ulink url="http://docs.python.org/c-api/init.html#thread-state-and-the-global-interpreter-lock"></ulink></para></footnote>, so threading is profitable only for larger I/O operations. <application>Unladen-swallow</application> <footnote><para><ulink url="http://code.google.com/p/unladen-swallow/"></ulink></para></footnote> is a faster implementation of Python with which you might be able to  optimize your code.
+			</para>
+		</formalpara>
+		
+		<formalpara>
+			<title>Perl</title>
+			<para>
+				Perl threads were originally created for applications running on systems without forking (such as systems with 32-bit Windows operating systems). In Perl threads, the data is copied for every single thread (Copy On Write). Data is not shared by default, because users should be able to define the level of data sharing. For data sharing the <application>threads::shared</application> module has to be included. However, data is not only then copied (Copy On Write), but the module also creates tied variables for the data, which takes even more time and is even slower. <footnote><para><ulink url="http://www.perlmonks.org/?node_id=288022"></ulink></para></footnote>
+			</para>
+		</formalpara>
+		
+		<formalpara>
+			<title>C</title>
+			<para>
+				C threads share the same memory, each thread has its own stack, and the kernel does not have to create new file descriptors and allocate new memory space. C can really use the support of more CPUs for more threads. Therefore, to maximize the performance of your threads, use a low-level language like C or C++. If you use a scripting language, consider writing a C binding. Use profilers to identify poorly performing parts of your code. <footnote><para><ulink url="http://people.redhat.com/drepper/lt2009.pdf"></ulink></para></footnote>
+			</para>
+		</formalpara>
+	</section>
+	<section id="Developer_Tips-Wake-ups">
+		<title>Wake-ups</title>
+		
+		<para>
+			Many applications scan configuration files for changes. In many cases, the scan is performed at a fixed interval, for example, every minute. This can be a problem, because it forces a disk to wake up from spindowns. The best solution is to find a good interval, a good checking mechanism, or to check for changes with <application>inotify</application> and react to events. <application>Inotify</application> can check variety of changes on a file or a directory. 
+		</para>
+		<para>
+			For example:
+		</para>
+<programlisting language="C">int fd;
+fd = inotify_init();
+int wd;
+/* checking modification of a file - writing into */
+wd = inotify_add_watch(fd, "./myConfig", IN_MODIFY);
+if (wd &lt; 0) {
+  inotify_cant_be_used();
+  switching_back_to_previous_checking();
+}
+...
+fd_set rdfs;
+struct timeval tv;
+int retval;
+FD_ZERO(&amp;rdfs);
+FD_SET(0, &amp;rdfs);
+
+tv.tv_sec = 5;
+value = select(1, &amp;rdfs, NULL, NULL, &amp;tv);
+if (value == -1)
+  perror(select);
+else {
+  do_some_stuff();
+}
+...</programlisting>
+		<para>
+			The advantage of this approach is the variety of checks that you can perform.
+		</para>
+		<para>
+			The main limitation is that only a limited number of watches are available on a system. The number can be obtained from <filename>/proc/sys/fs/inotify/max_user_watches</filename> and although it can be changed, this is not recommended. Furthermore, in case <application>inotify</application> fails, the code has to fall back to a different check method, which usually means many occurrences of <code>#if #define</code> in the source code.
+		</para>
+		<para>
+			For more information on <application>inotify</application>, refer to the <citerefentry><refentrytitle>inotify</refentrytitle></citerefentry> man page.
+		</para>
+	</section>
+	<section id="Developer_Tips-Fsync">
+		<title>Fsync</title>
+		<para>
+			<function>Fsync</function> is known as an I/O expensive operation, but this is is not completely true. For example, refer to Theodore Ts'o's article <citetitle>Don't fear the fsync!</citetitle> <footnote> <para> <ulink url="http://thunk.org/tytso/blog/2009/03/15/dont-fear-the-fsync/"></ulink> </para> </footnote> and the accompanying discussion.
+		</para>
+		<para>
+			<application>Firefox</application> used to call the <application>sqlite</application> library each time the user clicked on a link to go to a new page. <application>Sqlite</application> called <function>fsync</function> and because of the file system settings (mainly ext3 with data-ordered mode), there was a long latency when nothing happened. This could take a long time (up to 30 seconds) if another process was copying a large file at the same time.
+		</para>
+		<para>
+			However, in other cases, where <function>fsync</function> wasn't used at all, problems emerged with the switch to the ext4 file system. Ext3 was set to data-ordered mode, which flushed memory every few seconds and saved it to a disk. But with ext4 and laptop_mode, the interval between saves was longer and data might get lost when the system was unexpectedly switched off. Now ext4 is patched, but we must still consider the design of our applications carefully, and use <function>fsync</function> as appropriate.
+		</para>
+		<para>
+			The following simple example of reading and writing into a configuration file shows how a backup of a file can be made or how data can be lost:
+		</para>
+<programlisting language="C">/* open and read configuration file e.g. ~/.kde/myconfig */
+fd = open("./kde/myconfig", O_WRONLY|O_TRUNC|O_CREAT);
+read(myconfig);
+...
+write(fd, bufferOfNewData, sizeof(bufferOfNewData));
+close(fd);</programlisting>
+		<para>
+			A better approach would be:
+		</para>
+<programlisting language="C">open("/.kde/myconfig", O_WRONLY|O_TRUNC|O_CREAT);
+read(myconfig);
+...
+fd = open("/.kde/myconfig.suffix", O_WRONLY|O_TRUNC|O_CREAT);
+write(fd, bufferOfNewData, sizeof(bufferOfNewData));
+fsync; /* paranoia - optional */
+...
+close(fd);
+rename("/.kde/myconfig", "/.kde/myconfig~"); /* paranoia - optional */
+rename("/.kde/myconfig.suffix", "/.kde/myconfig");</programlisting>
+	</section>
+
+</appendix>

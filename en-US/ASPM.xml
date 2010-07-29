@@ -1,0 +1,47 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docarticle/xml/4.5/docarticlex.dtd" [
+]>
+<section id="ASPM">
+	<title>Active-State Power Management</title>
+	<para>
+		<firstterm>Active-State Power Management</firstterm> (ASPM) saves power in the <firstterm>Peripheral Component Interconnect Express</firstterm> (PCI Express or PCIe) subsystem by setting a lower power state for PCIe links when the devices to which they connect are not in use. ASPM controls the power state at both ends of the link, and saves power in the link even when the device at the end of the link is in a fully powered-on state.
+	</para>
+	<para>
+		When ASPM is enabled, device latency increases because of the time required to transition the link between different power states. ASPM has three policies to determine power states:
+	</para>
+	<variablelist>
+		<varlistentry>
+			<term>default</term>
+			<listitem>
+				<para>
+					sets PCIe link power states according to the defaults specified by the firmware on the system (for example, BIOS). This is the default state for ASPM.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>powersave</term>
+			<listitem>
+				<para>
+					sets ASPM to save power wherever possible, regardless of the cost to performance.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>performance</term>
+			<listitem>
+				<para>
+					disables ASPM to allow PCIe links to operate with maximum performance.
+				</para>
+			</listitem>
+		</varlistentry>
+	</variablelist>
+	<para>
+		ASPM policies are set in <filename>/sys/module/pcie_aspm/parameters/policy</filename>, but can also be specified at boot time with the <parameter>pcie_aspm</parameter> kernel parameter, where <literal>pcie_aspm=off</literal> disables ASPM and <literal>pcie_aspm=force</literal> enables ASPM, even on devices that do not support ASPM.
+	</para>
+	<warning>
+		<title>Warning — <literal>pcie_aspm=force</literal> can cause systems to stop responding</title>
+		<para>
+			If <literal>pcie_aspm=force</literal> is set, hardware that does not support ASPM can cause the system to stop responding. Before setting <literal>pcie_aspm=force</literal>, ensure that all PCIe hardware on the system supports ASPM.
+		</para>
+	</warning>
+</section>
