@@ -19,7 +19,7 @@
 	
 	<para>Before selecting and configuring a CPUfreq governor, you need to add the appropriate CPUfreq driver first.</para>
 	
-	<remark>add: how do you determine what the appropriate cpufreq driver is? that is how to choose between p4-clockmd and acpi-cpufreq?</remark>
+	<remark>add: how do you determine what the appropriate cpufreq driver is? that is how to choose between p4-clockmod and acpi-cpufreq?</remark>
 	<remark>Answer: always use acpi-cpufreq!</remark>
 
 <procedure><title>How to Add a CPUfreq Driver</title>

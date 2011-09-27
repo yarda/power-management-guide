@@ -101,30 +101,46 @@
 		<para>
 			For example:
 		</para>
-<programlisting language="C">int fd;
-fd = inotify_init();
-int wd;
-/* checking modification of a file - writing into */
-wd = inotify_add_watch(fd, "./myConfig", IN_MODIFY);
-if (wd &lt; 0) {
-  inotify_cant_be_used();
-  switching_back_to_previous_checking();
-}
-...
-fd_set rdfs;
-struct timeval tv;
-int retval;
-FD_ZERO(&amp;rdfs);
-FD_SET(0, &amp;rdfs);
+<programlisting language="C">
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;sys/time.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/inotify.h&gt;
+#include &lt;unistd.h&gt;
 
-tv.tv_sec = 5;
-value = select(1, &amp;rdfs, NULL, NULL, &amp;tv);
-if (value == -1)
-  perror(select);
-else {
-  do_some_stuff();
+int main(int argc, char *argv[]) {
+  int fd;
+  int wd;
+  int retval;
+  struct timeval tv;
+
+  fd = inotify_init();
+
+  /* checking modification of a file - writing into */
+  wd = inotify_add_watch(fd, "./myConfig", IN_MODIFY);
+  if (wd &lt; 0) {
+    printf("inotify cannot be used\n");
+    /* switch back to previous checking */
+  }
+
+  fd_set rfds;
+  FD_ZERO(&amp;rfds);
+  FD_SET(fd, &amp;rfds);
+  tv.tv_sec = 5;
+  tv.tv_usec = 0;
+  retval = select(fd + 1, &amp;rfds, NULL, NULL, &amp;tv);
+  if (retval == -1)
+    perror("select()");
+  else if (retval) {
+    printf("file was modified\n");
+  }
+  else
+    printf("timeout\n");
+
+  return EXIT_SUCCESS;
 }
-...</programlisting>
+</programlisting>
 		<para>
 			The advantage of this approach is the variety of checks that you can perform.
 		</para>
@@ -141,7 +157,7 @@ else {
 			<function>Fsync</function> is known as an I/O expensive operation, but this is is not completely true. For example, refer to Theodore Ts'o's article <citetitle>Don't fear the fsync!</citetitle> <footnote> <para> <ulink url="http://thunk.org/tytso/blog/2009/03/15/dont-fear-the-fsync/"></ulink> </para> </footnote> and the accompanying discussion.
 		</para>
 		<para>
-			<application>Firefox</application> used to call the <application>sqlite</application> library each time the user clicked on a link to go to a new page. <application>Sqlite</application> called <function>fsync</function> and because of the file system settings (mainly ext3 with data-ordered mode), there was a long latency when nothing happened. This could take a long time (up to 30 seconds) if another process was copying a large file at the same time.
+			Previously, <application>Firefox</application> called the <application>sqlite</application> library each time the user clicked on a link to go to a new page. <application>Sqlite</application> called <function>fsync</function> and because of the file system settings (mainly ext3 with data-ordered mode), there was a long latency when nothing happened. This could take a long time (30 seconds or more) if another process was copying a large file at the same time.
 		</para>
 		<para>
 			However, in other cases, where <function>fsync</function> wasn't used at all, problems emerged with the switch to the ext4 file system. Ext3 was set to data-ordered mode, which flushed memory every few seconds and saved it to a disk. But with ext4 and laptop_mode, the interval between saves was longer and data might get lost when the system was unexpectedly switched off. Now ext4 is patched, but we must still consider the design of our applications carefully, and use <function>fsync</function> as appropriate.
@@ -166,7 +182,7 @@ write(fd, bufferOfNewData, sizeof(bufferOfNewData));
 fsync; /* paranoia - optional */
 ...
 close(fd);
-rename("/.kde/myconfig", "/.kde/myconfig~"); /* paranoia - optional */
+/* do_copy("/.kde/myconfig", "/.kde/myconfig~"); */ /* paranoia - optional */
 rename("/.kde/myconfig.suffix", "/.kde/myconfig");</programlisting>
 	</section>
 

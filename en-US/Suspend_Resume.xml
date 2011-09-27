@@ -10,6 +10,6 @@
 		Video drivers are particularly problematic in this regard, because the <firstterm>Advanced Configuration and Power Interface</firstterm> (ACPI) specification does not require system firmware to be able to reprogram video hardware. Therefore, unless video drivers are able to program hardware from a completely uninitialized state, they may prevent the system from resuming.
 	</para>
 	<para>
-		Fedora&nbsp;&PRODVER; includes greater support for new graphics chipsets, which ensures that suspend and resume will work on a greater number of platforms. In particular, support for NVIDIA chipsets has been greatly improved; in particular for the GeForce&nbsp;8800 series.
+		Fedora&nbsp;&PRODVER; includes greater support for new graphics chipsets, which ensures that suspend and resume will work on a greater number of platforms.
 	</para>
 </section>

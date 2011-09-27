@@ -16,12 +16,12 @@
 	<itemizedlist>
 		<listitem>
 			<para>
-				 Configure the system BIOS to disable all hardware that you do not use. For example, parallel or serial ports, card readers, webcams, WiFi, and Bluetooth just to name a few possible candidates.
+				 Configure the system BIOS to disable all hardware that you do not use. For example, parallel or serial ports, card readers, webcams, Wi-Fi, and Bluetooth just to name a few possible candidates.
 			</para>
 		</listitem>
 		<listitem>
 			<para>
-				 Dim the display in darker environments where you do not need full illumination to read the screen comfortably. Use <menuchoice> <guimenu>System</guimenu> <guimenu>Preferences</guimenu> <guimenuitem>Power Management</guimenuitem> </menuchoice> on the GNOME desktop, <menuchoice> <guimenu>Kickoff Application Launcher</guimenu> <guimenu>Computer</guimenu> <guimenu>System Settings</guimenu> <guimenu>Advanced</guimenu> <guimenuitem>Power Management</guimenuitem> </menuchoice>  on the KDE desktop; or <application>gnome-power-manager</application>  or <application>xbacklight</application> at the command line; or the function keys on your laptop.
+				 Dim the display in darker environments where you do not need full illumination to read the screen comfortably. On the GNOME desktop, use <menuchoice> <guimenu>Applications</guimenu> <guimenu>System Tools</guimenu> <guimenuitem>System Settings</guimenuitem> </menuchoice>, then select <menuchoice> <guimenu>Hardware</guimenu> <guimenuitem>Power</guimenuitem></menuchoice>. On the KDE desktop, use <menuchoice> <guimenu>Kickoff Application Launcher</guimenu> <guimenu>Computer</guimenu> <guimenu>System Settings</guimenu> <guimenu>Advanced</guimenu> <guimenuitem>Power Management</guimenuitem> </menuchoice>. Alternatively, enter <application>gnome-power-manager</application> or <application>xbacklight</application> at the command line or use the function keys on your laptop.
 			</para>
 		</listitem>
 		<listitem>
@@ -95,12 +95,6 @@
 				activate best power saving mode for hard drives (part of the <systemitem>laptop-battery-powersave</systemitem> profile):
 			</para>
 <screen><command>hdparm -B 1 -S 200 /dev/sd*</command></screen>
-		</listitem>
-		<listitem>
-			<para>
-				disable CD-ROM polling (part of the <systemitem>laptop-battery-powersave</systemitem> profile):
-			</para>
-<screen><command>hal-disable-polling --device /dev/scd*</command></screen>
 		</listitem>
 		<listitem>
 			<para>

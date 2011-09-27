@@ -9,27 +9,7 @@
 	<para>
 		<application>GNOME Power Manager</application> also allows you to configure some basic power management settings. To access these settings, click the <application>GNOME Power Manager</application> icon in the system tray, then click <guimenuitem>Preferences</guimenuitem>
 	</para>
-	<para>
-		The <guilabel>Power Management Preferences</guilabel> screen contains three tabs:
-	</para>
-	<itemizedlist>
-		<listitem>
-			<para>
-				<guilabel>On AC Power</guilabel>
-			</para>
-		</listitem>
-		<listitem>
-			<para>
-				<guilabel>On Battery Power</guilabel>
-			</para>
-		</listitem>
-		<listitem>
-			<para>
-				<guilabel>General</guilabel>
-			</para>
-		</listitem>
-	</itemizedlist>
-	<para>
-		Use the <guilabel>On AC Power</guilabel> and <guilabel>On Battery Power</guilabel> tabs to specify how much time must pass before the display is turned off on an inactive system, how much time must pass before an inactive system is put to sleep, and whether the system should spin down hard disks when not in use. The <guilabel>On Battery Power</guilabel> tab also allows you to set the display brightness and to choose a behavior for a system with a critically low battery. For example, by default, <application>GNOME Power Manager</application> makes a system hibernate when its battery level reaches a critically low level. Use the <guilabel>General</guilabel> tab to set behaviours for the (physical) power button and suspend button on your system, and to specify the circumstances under which the <application>GNOME Power Manager</application> icon should appear in the system tray.
+<para>
+		Use the <guilabel>On AC power</guilabel> and <guilabel>On battery power</guilabel> ComboBoxes to specify how much time must pass before an inactive system goes to sleep. You can also choose a standard behavior for a system with a critically low battery. For example, by default, <application>GNOME Power Manager</application> makes a system hibernate when its battery level reaches a critically low level. On the bottom of this dialog, you can set behaviors for the physical power button and suspend button on your system.
 	</para>
 </section>

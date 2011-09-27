@@ -187,7 +187,10 @@ enabled=True
 # Enabled or disable the plugin. Default is True. Any other value
 # disables it.
 enabled=True</programlisting>
-	</section>
+	<para>
+    The CPU tuning plugin recently added support for the Super Hybrid Engine (SHE), as found on some Asus EEEPCs. If you are using this engine, you can enable SHE support by adding <option>eeefsb=True</option> into the <literal>[CPUTuning]</literal> section of <filename>tuned.conf</filename>. It will automatically downclock your FSB and save power while on idle, returning to normal speed when the load increases significantly. This functionality is enabled by default in the <literal>laptop-battery-powersave</literal> profile.
+  </para>
+  </section>
 	<section id="tuned-adm">
 		<title>Tuned-adm</title>
 		<para>
@@ -237,7 +240,7 @@ enabled=True</programlisting>
 				<term>server-powersave</term>
 				<listitem>
 					<para>
-						a power-saving profile directed at server systems. Enables ALPM powersaving for SATA host adapters, disables CD-ROM polling through <application>HAL</application> (refer to the <citerefentry><refentrytitle>hal-disable-polling</refentrytitle></citerefentry> man page) and activates the CPU and disk plugins of <application>tuned</application>.
+						a power-saving profile directed at server systems. Enables ALPM powersaving for SATA host adapters and activates the CPU and disk plugins of <application>tuned</application>.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -245,7 +248,7 @@ enabled=True</programlisting>
 				<term>laptop-ac-powersave</term>
 				<listitem>
 					<para>
-						a medium-impact power-saving profile directed at laptops running on AC. Enables ALPM powersaving for SATA host adapters, WiFi power saving, as well as the CPU, Ethernet and disk plugins of <application>tuned</application>.
+						a medium-impact power-saving profile directed at laptops running on AC. Enables ALPM powersaving for SATA host adapters, Wi-Fi power saving, as well as the CPU, Ethernet, and disk plugins of <application>tuned</application>.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -253,11 +256,19 @@ enabled=True</programlisting>
 				<term>laptop-battery-powersave</term>
 				<listitem>
 					<para>
-						a high-impact power-saving profile directed at laptops running on battery. It activates all power saving mechanisms from the previous profiles plus it enables the multi-core power-savings scheduler for low wakeup systems and makes sure that the ondemand governor is active and that AC97 audio power-saving is enabled. You can use this profile to save the maximum amount of power on any kind of system, not only laptops on battery power. The tradeoff for this profile is a noticeable impact on performance, specifically latency of disk and network I/O.
+						a high-impact power-saving profile directed at laptops running on battery. It activates all power saving mechanisms from the previous profiles, plus it enables the multi-core power-savings scheduler for low wakeup systems and makes sure that the ondemand governor is active and that AC97 audio power-saving is enabled. On compatible Asus EEEPCs, it enables SHE support in the CPU tuning plugin. You can use this profile to save the maximum amount of power on any kind of system, not only laptops on battery power. The trade-off for this profile is a noticeable impact on performance, specifically latency of disk and network I/O.
 					</para>
 				</listitem>
 			</varlistentry>
 			<varlistentry>
+				<term>spindown-disk</term>
+				<listitem>
+					<para>
+						a power-saving profile for machines with classic HDDs to maximize spindown time. It disables the <application>tuned</application> power savings mechanism, disables USB autosuspend, disables Bluetooth, enables Wi-Fi power saving, disables logs syncing, increases disk write-back time, and lowers disk swappiness. All partitions are remounted with <option>noatime</option>.
+					</para>
+				</listitem>
+			</varlistentry>
+				<varlistentry>
 				<term>throughput-performance</term>
 				<listitem>
 					<para>
@@ -270,6 +281,14 @@ enabled=True</programlisting>
 				<listitem>
 					<para>
 						a server profile for typical latency performance tuning. it disables <application>tuned</application> and <application>ktune</application> power saving mechanisms and enables <application>sysctl</application> settings that improve the latency performance of your network I/O.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>enterprise-storage</term>
+				<listitem>
+					<para>
+						a server profile directed at enterprise-class storage, maximizing I/O throughput. It activates the same settings as the <literal>throughput-performance</literal> profile, multiplies readahead settings, and disables barriers on non-root and non-boot partitions.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -318,9 +337,7 @@ enabled=True</programlisting>
 		</para>
 <screen><command>cp -a /etc/tune-profiles/laptop-battery-powersave/ /etc/tune-profiles/myprofile</command></screen>
 		<para>
-			Modify any of the files in the new profile to match your personal requirements. For example, if you require the detection of CD changes you could disable that optimization by commenting out the appropriate line in the ktune.sh script:
+			Modify any of the files in the new profile to match your personal requirements. 
 		</para>
-<programlisting># Disable HAL polling of CDROMS
-# for i in /dev/scd*; do hal-disable-polling --device $i; done > /dev/null 2>&amp;1</programlisting>
 	</section>
 </section>

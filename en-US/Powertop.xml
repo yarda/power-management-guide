@@ -4,49 +4,54 @@
 <section id="PowerTOP">
 	<title>PowerTOP</title>
 	<para>
-		The tickless kernel in Fedora allows the CPU to enter the idle state more frequently, reducing power consumption and improving power management. The new <application>PowerTOP</application> tool identifies specific components of kernel and userspace applications that frequently wake up the CPU. <application>PowerTOP</application> was used in development to perform the audits described in <xref linkend="Optimizations_in_User_Space"/> that led to many applications being tuned in this release, reducing unnecessary CPU wake up by a factor of ten.
+		The tickless kernel in Fedora allows the CPU to enter the idle state more frequently, reducing power consumption and improving power management. The new <application>PowerTOP</application> tool identifies specific components of kernel and user-space applications that frequently wake up the CPU. <application>PowerTOP</application> was used in development to perform the audits described in <xref linkend="Optimizations_in_User_Space"/> that led to many applications being tuned in this release, reducing unnecessary CPU wake up by a factor of ten.</para><para>Fedora&nbsp;&PRODVER; comes with version 2.x of <application>PowerTOP</application>. This version is a complete rewrite of the 1.x code base. It features a clearer tab-based user interface and extensively uses the kernel "perf" infrastructure to give more accurate data. The power behavior of system devices is tracked and prominently displayed, so problems can be pinpointed quickly. More experimentally, the 2.x codebase includes a power estimation engine that can indicate how much power individual devices and processes are consuming. Refer to <xref linkend="fig-PowerTOP"/>.
 	</para>
 	<para>
 		Install <application>PowerTOP</application> with the command:
 	</para>
 <screen><command>yum install powertop</command></screen>
 	<para>
-		Run <application>PowerTOP</application> with the command:
+		<application>PowerTOP</application> can provide an estimate of the total power usage of the system and show individual power usage for each process, device, kernel work, timer, and interrupt handler. Laptops should run on battery power during this task. To calibrate the power estimation engine, run the command:
+	</para>
+<screen><command>powertop --calibrate</command></screen>
+        <para>
+                Calibration takes time and requires root privileges. The process performs various tests, and will cycle through brightness levels and switch devices on and off. Do not touch the machine during the calibration. When the calibration process finishes, <application>PowerTOP</application> starts as normal. Let it run for approximately an hour to collect data. When enough data is collected, power estimation figures will begin appearing in the first column.
+        </para>
+	<para>
+		Next, run <application>PowerTOP</application> with the command:
 	</para>
 <screen><command>powertop</command></screen>
 	<para>
-		Note that you will need to run <application>PowerTOP</application> with root privileges to allow the application to do anything useful.
+		You will need to run <application>PowerTOP</application> with root privileges. Your laptop should still be running on battery power so that all available data will be presented.
 	</para>
 	<para>
-		When it runs, <application>PowerTOP</application> gathers statistics from the system and presents you with a list of the components that are sending wakeups to the CPU most frequently. <application>PowerTOP</application> also makes suggestions for tuning the system for lower power consumption. These suggestions appear at the bottom of the screen, and specify a key for you to press to accept <application>PowerTOP</application>'s suggestion. As <application>PowerTOP</application> refreshes periodically, further suggestions appear. In <xref linkend="fig-PowerTOP"/>, note the suggestion to <literal>increase the VM dirty writeback time</literal>, and the key (<keycap>W</keycap>) to press to accept the suggestion.
-	</para>
-	
-	<para>
-		When it runs, <application>PowerTOP</application> gathers statistics from the system and presents you with several important lists of information. At the top is a list of how long your CPU cores have been in each of the available C and P states. The longer the CPU stays in the higher C or P stats the better (<literal>C4</literal> being higher than <literal>C3</literal>) and is a good indicator of how well the system is tuned towards CPU utilization. Your goal should be residency of 90% or more in the highest C or P state while the system is idle. 
-	</para>
-	<para>
-		The second piece of information is a summary of the actual wakeups per second of the machine. The number of wakeups per second gives you a good measure of how well the services or the devices and drivers of the kernel are performing with regard to power usage on your system. The more wakeups per second you have, the more power is consumed, so lower is better here. 
-	</para>
-	<para>
-		Next, <application>PowerTOP</application> provides an estimate of the actual power usage of the system, if available. Expect <application>PowerTOP</application> to report this figure on laptops while they are in battery mode.
-		
-	</para>
-	<para>
-		Any available estimates of power usage are followed by a detailed list of the components that send wakeups to the CPU most frequently. At the top of the list are those components that you should investigate more closely to optimize your system to reduce power usage. If they are kernel components, (indicated by the name of the component being listed in <literal>&lt;</literal><literal>&gt;</literal>) then the wakeups are often associated with a specific driver that causes them. Tuning drivers most usually requires kernel changes which go beyond the scope of this document. However, userland processes that send wakeups are more easily managed. First, identify if this service or application should run at all on this system. If not, simply deactivate it. To turn off a service permanently, run:
+		While it runs, <application>PowerTOP</application> gathers statistics from the system. In the <guimenu>Overview</guimenu> tab, you can view a list of the components that are either sending wake-ups to the CPU most frequently or are consuming the most power (refer to <xref linkend="fig-PowerTOP"/>). The adjacent columns display power estimation, how the resource is being used, wakeups per second, the classification of the component (such as process, device, or timer), and a description of the component. Wakeups per second indicates how efficiently the services or the devices and drivers of the kernel are performing. Less wakeups means less power is consumed. Components are ordered by how much further their power usage can be optimized.</para><para>Tuning driver components typically requires kernel changes, which is beyond the scope of this document. However, userland processes that send wakeups are more easily managed. First, identify if this service or application needs to run at all on this system. If not, simply deactivate it. To turn off an old SYSV service permanently, run:
 	</para>
 <screen><command>chkconfig <replaceable>servicename</replaceable> off</command></screen>
-	<para>
+  <para>
+    To turn off a new systemd service permanently, run:
+  </para>
+<screen><command>systemctl <replaceable>servicename.service</replaceable> disable</command></screen>
+  <para>
 		If you need more details about the what the component actually does, run: 
 	</para>
 <screen><command>ps -awux | grep <replaceable>componentname</replaceable></command> 
 <command>strace -p <replaceable>processid</replaceable></command></screen>
 	<para>
-		If the trace looks like it is repeating itself, then you probably have found a busy loop. To fix this would require a code change in that component and that again goes beyond the scope of this document. 
+		If the trace looks like it is repeating itself, then you probably have found a busy loop. Fixing such bugs typically requires a code change in that component, which again goes beyond the scope of this document.
 	</para>
-	<para>
-		Finally, <application>PowerTOP</application> also makes suggestions for tuning the system for lower power consumption. These suggestions appear at the bottom of the screen, and specify a key for you to press to accept <application>PowerTOP</application>'s suggestion. As <application>PowerTOP</application> refreshes periodically, further suggestions appear. In <xref linkend="fig-PowerTOP"/>, note the suggestion to <literal>increase the VM dirty writeback time</literal>, and the key (<keycap>W</keycap>) to press to accept the suggestion. These changes will only be active until the next reboot. To help you make the changes permanent, <application>PowerTOP</application> displays the exact command it runs to perform this optimization. Add the command to your <filename>/etc/rc.local</filename> file with your preferred text editor so that it takes effect every time that the computer starts.
+  <para>
+    As seen in <xref linkend="fig-PowerTOP"/>, total power consumption and the remaining battery life are displayed, if applicable. Below these is a short summary, featuring total wakeups per second, GPU operations per second, and virtual filesystem operations per second.
 	</para>
-	
+  <para>
+    Use the <keycap>left</keycap> and <keycap>right</keycap> keys to cycle through tabs. In the <guimenu>Idle stats</guimenu> tab, use of C-states is shown for all processors and cores. In the <guimenu>Frequency stats</guimenu> tab, use of P-states including the Turbo mode (if applicable) is shown for all processors and cores. The longer the CPU stays in the higher C- or P-states, the better (<literal>C4</literal> being higher than <literal>C3</literal>). This is a good indication of how well CPU usage has been optimized. Residency should ideally be 90% or more in the highest C- or P-state while the system is idle.
+        </para>
+        <para>
+                The <guimenu>Device Stats</guimenu> tab provides similar information to <guimenu>Overview</guimenu> but only for devices.
+	</para>
+        <para>
+                The <guimenu>Tunables</guimenu> tab contains suggestions for optimizing the system for lower power consumption. The <keycap>up</keycap> and <keycap>down</keycap> keys can be used to move through suggestions. The <keycap>enter</keycap> key toggles the suggestion on and off. These tunings are not persistent across reboots. This problem has been referred to developers.
+	</para>
 	<figure id="fig-PowerTOP" float="0"><title>PowerTOP in Operation</title>
 		<mediaobject>
 			<imageobject><imagedata fileref="images/powertop.png" format="PNG"/></imageobject>

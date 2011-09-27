@@ -82,7 +82,7 @@
 	</itemizedlist>
 	
 	<para>
-		A CPU running on the lowest sleep state possible consumes the least amount of watts, but it also takes considerably more time to wake it up from that state when needed. In very rare cases this can lead to the CPU having to wake up immediately every time it just went to sleep. This situation results in an effectively permanently busy CPU and loses some of the potential power saving if another state had been used.
+		A CPU running on the lowest sleep state possible (indicated by the highest C-state number) consumes the least amount of watts, but it also takes considerably more time to wake it up from that state when needed. In very rare cases this can lead to the CPU having to wake up immediately every time it just went to sleep. This situation results in an effectively permanently busy CPU and loses some of the potential power saving if another state had been used.
 	</para>
 	
 	<formalpara>
@@ -92,7 +92,7 @@
 		</para>
 	</formalpara>
 
-<!--<para>This same principle applies to other devices attached to the system as well. In general, devices that are never used (for example a sound card on a dedicated web server) should be completely disabled. But if a specific device is used intermittently, latency-on-wakeup should be considered carefully: 
+<!--<para>This same principle applies to other devices attached to the system as well. In general, devices that are never used (for example a sound card on a dedicated web server) should be completely disabled. But if a specific device is used intermittently, latency-on-wake-up should be considered carefully: 
 	
 	For example, if the system in question is a web server, disabling the sound card completely is a good idea since it is never used. But if -->
 
