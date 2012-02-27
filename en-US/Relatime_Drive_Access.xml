@@ -10,6 +10,7 @@
 		The kernel used in Fedora&nbsp;&PRODVER; supports another alternative — <option>relatime</option>. <option>Relatime</option> maintains <systemitem>atime</systemitem> data, but not for each time that a file is accessed. With this option enabled, <systemitem>atime</systemitem> data is written to the disk only if the file has been modified since the <systemitem>atime</systemitem> data was last updated (<systemitem>mtime</systemitem>), or if the file was last accessed more than a certain length of time ago (by default, one day). 
 	</para>
 	<para>
-		By default, all filesystems are now mounted with <option>relatime</option> enabled.  To suppress this feature across an entire system, use the boot parameter <parameter>default_relatime=0</parameter>. If <option>relatime</option> is enabled on a system by default, you can suppress it for any particular file system by mounting that file system with the option <option>norelatime</option>. Finally, to vary the default length of time before which the system will update a file's <systemitem>atime</systemitem> data, use the <parameter>relatime_interval=</parameter> boot parameter, specifying the period in seconds. The default value is <literal>86400</literal>.
+		By default, all filesystems are now mounted with <option>relatime</option> enabled. You can suppress it for any particular file system by mounting that file system with the option <option>norelatime</option>.
 	</para>
+	
 </section>
