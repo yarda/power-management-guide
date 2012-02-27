@@ -154,10 +154,10 @@ int main(int argc, char *argv[]) {
 	<section id="Developer_Tips-Fsync">
 		<title>Fsync</title>
 		<para>
-			<function>Fsync</function> is known as an I/O expensive operation, but this is is not completely true. For example, refer to Theodore Ts'o's article <citetitle>Don't fear the fsync!</citetitle> <footnote> <para> <ulink url="http://thunk.org/tytso/blog/2009/03/15/dont-fear-the-fsync/"></ulink> </para> </footnote> and the accompanying discussion.
+		  <function>Fsync</function> is known as an I/O expensive operation, but this is is not completely true. <!-- For example, refer to Theodore Ts'o's article <citetitle>Don't fear the fsync!</citetitle> <footnote> <para> <ulink url="http://thunk.org/tytso/blog/2009/03/15/dont-fear-the-fsync/"></ulink> </para> </footnote> and the accompanying discussion. -->
 		</para>
 		<para>
-			Previously, <application>Firefox</application> called the <application>sqlite</application> library each time the user clicked on a link to go to a new page. <application>Sqlite</application> called <function>fsync</function> and because of the file system settings (mainly ext3 with data-ordered mode), there was a long latency when nothing happened. This could take a long time (30 seconds or more) if another process was copying a large file at the same time.
+			<application>Firefox</application> used to call the <application>sqlite</application> library each time the user clicked on a link to go to a new page. <application>Sqlite</application> called <function>fsync</function> and because of the file system settings (mainly ext3 with data-ordered mode), there was a long latency when nothing happened. This could take a long time (up to 30 seconds) if another process was copying a large file at the same time.
 		</para>
 		<para>
 			However, in other cases, where <function>fsync</function> wasn't used at all, problems emerged with the switch to the ext4 file system. Ext3 was set to data-ordered mode, which flushed memory every few seconds and saved it to a disk. But with ext4 and laptop_mode, the interval between saves was longer and data might get lost when the system was unexpectedly switched off. Now ext4 is patched, but we must still consider the design of our applications carefully, and use <function>fsync</function> as appropriate.
@@ -165,25 +165,29 @@ int main(int argc, char *argv[]) {
 		<para>
 			The following simple example of reading and writing into a configuration file shows how a backup of a file can be made or how data can be lost:
 		</para>
-<programlisting language="C">/* open and read configuration file e.g. ~/.kde/myconfig */
-fd = open("./kde/myconfig", O_WRONLY|O_TRUNC|O_CREAT);
-read(myconfig);
+<programlisting language="C">/* open and read configuration file e.g. ./myconfig */
+fd = open("./myconfig", O_RDONLY);
+read(fd, myconfig_buf, sizeof(myconfig_buf));
+close(fd);
 ...
-write(fd, bufferOfNewData, sizeof(bufferOfNewData));
+fd = open("./myconfig", O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
+write(fd, myconfig_buf, sizeof(myconfig_buf));
 close(fd);</programlisting>
 		<para>
 			A better approach would be:
 		</para>
-<programlisting language="C">open("/.kde/myconfig", O_WRONLY|O_TRUNC|O_CREAT);
-read(myconfig);
+<programlisting language="C">/* open and read configuration file e.g. ./myconfig */
+fd = open("./myconfig", O_RDONLY);
+read(fd, myconfig_buf, sizeof(myconfig_buf));
+close(fd);
 ...
-fd = open("/.kde/myconfig.suffix", O_WRONLY|O_TRUNC|O_CREAT);
-write(fd, bufferOfNewData, sizeof(bufferOfNewData));
-fsync; /* paranoia - optional */
+fd = open("./myconfig.suffix", O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR
+write(fd, myconfig_buf, sizeof(myconfig_buf));
+fsync(fd); /* paranoia - optional */
 ...
 close(fd);
-/* do_copy("/.kde/myconfig", "/.kde/myconfig~"); */ /* paranoia - optional */
-rename("/.kde/myconfig.suffix", "/.kde/myconfig");</programlisting>
+rename("./myconfig", "./myconfig~"); /* paranoia - optional */
+rename("./myconfig.suffix", "./myconfig");</programlisting>
 	</section>
 
 </appendix>
