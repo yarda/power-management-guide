@@ -24,9 +24,13 @@
 	</para>
 	
 	<para>
-		Install these tools with <application>SystemTap</application> with the command:
+		First, install <application>kernel-debuginfo</application> with the following command:
+<screen><command>debuginfo-install kernel</command></screen>
 	</para>
-<screen><command>yum install systemtap tuned-utils kernel-debuginfo</command></screen>
+	<para>
+		Then install the tools with <application>SystemTap</application>:
+	</para>
+<screen><command>yum install systemtap tuned-utils</command></screen>
 	<para>
 		Run the tools with the command:
 	</para>
