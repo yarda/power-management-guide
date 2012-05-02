@@ -19,6 +19,14 @@
 			<orgname>Red Hat</orgname>
 			<orgdiv>Engineering Content Services</orgdiv>
 		</affiliation>
-		<email>r.landmann@redhat.com</email>
+	</author>
+		<author>
+		<firstname>Jack</firstname>
+		<surname>Reed</surname>
+		<affiliation>
+			<orgname>Red Hat</orgname>
+			<orgdiv>Engineering Content Services</orgdiv>
+		</affiliation>
+		<email>jreed@redhat.com</email>
 	</author>
 </authorgroup>
