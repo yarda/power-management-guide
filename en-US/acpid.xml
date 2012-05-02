@@ -1,0 +1,30 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docarticle/xml/4.5/docarticlex.dtd" [
+]>
+<section id="acpid">
+	<title>acpid</title>
+	<para>
+	  <application>acpid</application> is a daemon that monitors <firstterm>Advanced Configuration and Power Interface</firstterm> (ACPI) events and executes scripts to respond to them. These events are typically prompted by the user interacting with the hardware, such as closing a laptop lid or pressing the power button. 
+	</para>
+	<para>
+	  <application>acpid</application> executes actions based on rules you establish. Certain rules are predefined on installation but can be altered. These rules are set in configuration files created in <filename>/etc/acpi/events</filename>.
+	</para>  
+	<para>
+	   Each file must define an event and an action on separate lines for each rule. The <computeroutput>event=</computeroutput> line identifies the hardware interaction to be configured. The <computeroutput>action=</computeroutput> line specifies a shell script containing the configuration, which you must create (typically in <filename>/etc/acpi/actions</filename>). Multiple rules can be set for each event, or one rule for multiple events. 
+	</para>
+	
+	<para>
+	  <application>acpid</application> ships with one shell script at <filename>/etc/acpi/actions/power.sh</filename> and two configuration files in <filename>/etc/acpi/events</filename>: <filename>powerconf</filename> and <filename>videoconf</filename>. <filename>powerconf</filename> is structured as follows:
+	</para>  
+<programlisting>
+# ACPID config to power down machine if powerbutton is pressed, but only if 
+# no gnome-power-manager is running
+	      
+event=button/power.*
+action=/etc/acpi/actions/power.sh
+</programlisting>
+	<para>
+	  <application>acpid</application> is installed by default in some, but not all Fedora installations.
+	</para>  
+	
+</section>

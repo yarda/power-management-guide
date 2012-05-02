@@ -28,6 +28,7 @@
 		<xi:include href="Tuned.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 		<xi:include href="upower.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 		<xi:include href="gnome-power-manager.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+		<xi:include href="acpid.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 		<xi:include href="Other_auditing.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	</chapter>
 	
