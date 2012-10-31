@@ -1,0 +1,30 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docarticle/xml/4.5/docarticlex.dtd" [
+]>
+<section id="cpu_monitors">
+	<title>CPU Monitors</title>
+	<para>
+	      <application>cpupower</application> features a selection of monitors that provide idle and sleep state statistics and frequency information and report on processor topology. Some monitors are processor-specific, while others are compatible with any processor. Refer to the <command>cpupower-monitor</command> man page for details on what each monitor measures and which systems they are compatible with.
+	</para>
+	<para>
+	      Use the following options with the <command>cpupower monitor</command> command:
+	</para>  
+	
+	
+	<itemizedlist>
+		<listitem>
+		  <para><command>-l</command> &mdash; list all monitors available on your system.</para>
+		</listitem>
+		
+		
+		<listitem>
+		  <para><command>-m <replaceable>&lt;monitor1&gt;</replaceable>, <replaceable>&lt;monitor2&gt;</replaceable></command> &mdash; display specific monitors. Their identifiers can be found by running <command>-l</command>.</para>
+		</listitem>
+		
+		<listitem>
+		  <para><command>command</command> &mdash; display the idle statistics and CPU demands of a specific command.</para>
+		</listitem>
+		
+	</itemizedlist>
+	
+</section>

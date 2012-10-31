@@ -217,14 +217,77 @@ enabled=True</programlisting>
 		</para>
 <screen><command>tuned-adm off</command></screen>
 		<para>
-			When you first install <application>tuned</application>, the <literal>default</literal> profile will be active. Fedora&nbsp;&PRODVER; also includes the following predefined profiles:
+		  When you first install <application>tuned</application>, the <literal>balanced</literal> profile will be active. The following predefined profiles are available after installing <package>tuned</package>:
 		</para>
 		<variablelist>
+		  
+		<varlistentry>
+				<term>balanced</term>
+				<listitem>
+					<para>
+						the default power-saving profile. It enables CPU and disk plugins of <application>tuned</application> and activates the <command>ondemand</command> governor.
+					</para>
+				</listitem>
+			</varlistentry>
+			
+			<varlistentry>
+				<term>powersave</term>
+				<listitem>
+					<para>
+						a profile for maximum power saving performance. It enables USB autosuspend, WiFi power saving, and ALPM power saving for SATA host adapters (refer to <xref linkend="ALPM"/>). It also schedules multi-core power savings for systems with a low wakeup rate and activates the <command>ondemand</command> governor.
+					</para>
+				</listitem>
+			</varlistentry>
+		  
+			<varlistentry>
+				<term>throughput-performance</term>
+				<listitem>
+					<para>
+						a server profile for typical throughput performance tuning. It disables <application>tuned</application> and <application>ktune</application> power saving mechanisms, enables <application>sysctl</application> settings that improve the throughput performance of your disk and network I/O, and switches to the <application>deadline scheduler</application>.
+					</para>
+				</listitem>
+			</varlistentry>
+			
+			<varlistentry>
+				<term>latency-performance</term>
+				<listitem>
+					<para>
+						a server profile for typical latency performance tuning. it disables <application>tuned</application> and <application>ktune</application> power saving mechanisms and enables <application>sysctl</application> settings that improve the latency performance of your network I/O.
+					</para>
+				</listitem>
+			</varlistentry>
+			
+			<varlistentry>
+				<term>virtual-guest</term>
+				<listitem>
+					<para>
+						a profile designed for virtual guests based on the enterprise-storage profile that, among other tasks, decreases virtual memory swappiness.
+					</para>
+				</listitem>
+			</varlistentry>
+			
+			<varlistentry>
+				<term>virtual-host</term>
+				<listitem>
+					<para>
+						a profile designed for virtual hosts based on the enterprise-storage profile that, among other tasks, decreases virtual memory swappiness and is more aggressive in its writeback of dirty pages.
+					</para>
+				</listitem>
+			</varlistentry>
+			
+		      </variablelist>
+		      
+		      <para>
+			Additional predefined profiles are available by installing the <package>tuned-profiles-compat</package> package:
+		      </para>
+		      
+		      <variablelist>
+		  
 			<varlistentry>
 				<term>default</term>
 				<listitem>
 					<para>
-						the default power-saving profile. It has the lowest impact on power saving of the available profiles and only enables CPU and disk plugins of <application>tuned</application>.
+						this has the lowest impact on power saving of the available profiles and only enables CPU and disk plugins of <application>tuned</application>.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -265,22 +328,6 @@ enabled=True</programlisting>
 				<listitem>
 					<para>
 						a power-saving profile for machines with classic HDDs to maximize spindown time. It disables the <application>tuned</application> power savings mechanism, disables USB autosuspend, disables Bluetooth, enables Wi-Fi power saving, disables logs syncing, increases disk write-back time, and lowers disk swappiness. All partitions are remounted with <option>noatime</option>.
-					</para>
-				</listitem>
-			</varlistentry>
-				<varlistentry>
-				<term>throughput-performance</term>
-				<listitem>
-					<para>
-						a server profile for typical throughput performance tuning. It disables <application>tuned</application> and <application>ktune</application> power saving mechanisms, enables <application>sysctl</application> settings that improve the throughput performance of your disk and network I/O, and switches to the <application>deadline scheduler</application>.
-					</para>
-				</listitem>
-			</varlistentry>
-			<varlistentry>
-				<term>latency-performance</term>
-				<listitem>
-					<para>
-						a server profile for typical latency performance tuning. it disables <application>tuned</application> and <application>ktune</application> power saving mechanisms and enables <application>sysctl</application> settings that improve the latency performance of your network I/O.
 					</para>
 				</listitem>
 			</varlistentry>

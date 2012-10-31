@@ -34,9 +34,19 @@
 	
 	<chapter id="Core_Infrastructure">
 		<title>Core Infrastructure and Mechanics</title>
+		
+		<important>
+		  <title>Package required for <command>cpupower</command></title>
+		  <para>
+			  To use the <command>cpupower</command> command featured in this chapter, ensure you have the <package>kernel-tools</package> package installed.
+		  </para>
+		</important>
+		
 		<xi:include href="CPU_Idle_States.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 		<xi:include href="CPUfreq_Governors.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 		<!-- <xi:include href="Video_Driver.xml" xmlns:xi="http://www.w3.org/2001/XInclude" /> -->
+		<xi:include href="CPU_Monitors.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+		<xi:include href="CPU_Power_Saving.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 		<xi:include href="Suspend_Resume.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 		<xi:include href="Tickless_Kernel.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 		<xi:include href="ASPM.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />

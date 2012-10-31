@@ -43,6 +43,12 @@
 			</listitem>
 		</varlistentry>
 	</variablelist>
+	
+	<para>
+		To view available idle states and other statistics for the CPUidle driver, run the following command:
+	</para>
+<screen><command>cpupower idle-info</command></screen>
+
 	<para>
 		Recent Intel CPUs with the "Nehalem" microarchitecture feature a new C-State, C6, which can reduce the voltage supply of a CPU to zero, but typically reduces power consumption by between 80% and 90%. The kernel in Fedora&nbsp;&PRODVER; includes optimizations for this new C-State.
 	</para>

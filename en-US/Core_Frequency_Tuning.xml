@@ -36,174 +36,204 @@
 		<tertiary>tuning</tertiary>
 </indexterm>	
 	
-	<para>Once you've chosen an appropriate CPUfreq governor, you can further tune the speed of each CPU using the tunables found in <filename>/sys/devices/system/cpu/<replaceable>[cpu ID]</replaceable>/cpufreq/</filename>. These tunables are:</para>
+<para>Once you have chosen an appropriate CPUfreq governor, you can view CPU speed and policy information with the <command>cpupower frequency-info</command> command and further tune the speed of each CPU with options for <command>cpupower frequency-set</command>.</para>
 	
+<para>
+  For <command>cpupower frequency-info</command>, the following options are available:
+</para>  
 	<itemizedlist>
-		<listitem><para><filename>cpuinfo_min_freq</filename> &mdash; Shows the CPU's available minimum operating frequency (in KHz).</para>
+		<listitem><para><command>--freq</command> &mdash; Shows the current speed of the CPU according to the CPUfreq core, in KHz.</para>
 			
 <indexterm>
 	<primary>CPUfreq</primary>
 	<secondary>tuning</secondary>
-	<tertiary>cpuinfo_min_freq</tertiary>
+	<tertiary>current frequency</tertiary>
 </indexterm>
 			
 <indexterm>
 	<primary>tuning</primary>
 	<secondary>CPUfreq</secondary>
-	<tertiary>cpuinfo_min_freq</tertiary>
+	<tertiary>current frequency</tertiary>
 </indexterm>
 			
 <indexterm>
-	<primary>cpuinfo_min_freq</primary>
+	<primary>current frequency</primary>
 	<secondary>CPUfreq</secondary>
 	<tertiary>tuning</tertiary>
 </indexterm>		
 		</listitem>
 		
-		<listitem>
-			
+		<listitem><para><command>--hwfreq</command> &mdash; Shows the current speed of the CPU according to the hardware, in KHz (only available as root).</para>
+
 <indexterm>
 	<primary>CPUfreq</primary>
 	<secondary>tuning</secondary>
-	<tertiary>cpuinfo_max_freq</tertiary>
+	<tertiary>current hardware frequency</tertiary>
 </indexterm>
 			
 <indexterm>
 	<primary>tuning</primary>
 	<secondary>CPUfreq</secondary>
-	<tertiary>cpuinfo_max_freq</tertiary>
+	<tertiary>current hardware frequency</tertiary>
 </indexterm>
 			
 <indexterm>
-	<primary>cpuinfo_max_freq</primary>
+	<primary>current hardware frequency</primary>
 	<secondary>CPUfreq</secondary>
 	<tertiary>tuning</tertiary>
 </indexterm>
-			
-		<para><filename>cpuinfo_max_freq</filename> &mdash; Shows the CPU's available maximum operating frequency (in KHz).</para></listitem>
+		
+		</listitem>
 		
 		<listitem>
+						
+			<para><command>--driver</command> &mdash; Shows what CPUfreq driver is used to set the frequency on this CPU.</para>
+			
 			
 <indexterm>
 	<primary>CPUfreq</primary>
 	<secondary>tuning</secondary>
-	<tertiary>scaling_driver</tertiary>
+	<tertiary>Current driver</tertiary>
 </indexterm>
 			
 <indexterm>
 	<primary>tuning</primary>
 	<secondary>CPUfreq</secondary>
-	<tertiary>scaling_driver</tertiary>
+	<tertiary>Current driver</tertiary>
 </indexterm>
 			
 <indexterm>
-	<primary>scaling_driver</primary>
+	<primary>Current driver</primary>
 	<secondary>CPUfreq</secondary>
 	<tertiary>tuning</tertiary>
-</indexterm>			
-			<para><filename>scaling_driver</filename> &mdash; Shows what CPUfreq driver is used to set the frequency on this CPU.</para></listitem>
-		
-		<listitem>
-
-<indexterm>
-<primary>CPUfreq</primary>
-<secondary>tuning</secondary>
-<tertiary>scaling_available_governors</tertiary>
-</indexterm>
-
-<indexterm>
-<primary>tuning</primary>
-<secondary>CPUfreq</secondary>
-<tertiary>scaling_available_governors</tertiary>
-</indexterm>
-
-<indexterm>
-<primary>scaling_available_governors</primary>
-<secondary>CPUfreq</secondary>
-<tertiary>tuning</tertiary>
 </indexterm>
 			
-			<para><filename>scaling_available_governors</filename> &mdash; Shows the CPUfreq governors available in this kernel. If you wish to use a CPUfreq governor that is not listed in this file, refer to <xref linkend="enabling_a_cpufreq_governor"/> in <xref linkend="cpufreq_setup"/> for instructions on how to do so.</para></listitem>
+			</listitem>
 		
 		<listitem>
+
+			
+			<para><command>--governors</command> &mdash; Shows the CPUfreq governors available in this kernel. If you wish to use a CPUfreq governor that is not listed in this file, refer to <xref linkend="enabling_a_cpufreq_governor"/> in <xref linkend="cpufreq_setup"/> for instructions on how to do so.</para>			
+			
 <indexterm>
 <primary>CPUfreq</primary>
 <secondary>tuning</secondary>
-<tertiary>scaling_governor</tertiary>
+<tertiary>available governors</tertiary>
 </indexterm>
 
 <indexterm>
 <primary>tuning</primary>
 <secondary>CPUfreq</secondary>
-<tertiary>scaling_governor</tertiary>
+<tertiary>available governors</tertiary>
 </indexterm>
 
 <indexterm>
-<primary>scaling_governor</primary>
+<primary>available governors</primary>
 <secondary>CPUfreq</secondary>
 <tertiary>tuning</tertiary>
-</indexterm>			
-			<para><filename>scaling_governor</filename> &mdash; Shows what CPUfreq governor is currently in use. To use a different governor, simply use <command>echo <replaceable>[governor]</replaceable> > /sys/devices/system/cpu/<replaceable>[cpu ID]</replaceable>/cpufreq/scaling_governor</command> (refer to <xref linkend="enabling_a_cpufreq_governor"/> in <xref linkend="cpufreq_setup"/> for more information).</para></listitem>
+</indexterm>
+
+			</listitem>
 		
-		<listitem>
-<indexterm>
+		  
+		  <listitem>
+			<para><command>--affected-cpus</command> &mdash; Lists CPUs that require frequency coordination software.</para>
+			
+<indexterm>			
 <primary>CPUfreq</primary>
 <secondary>tuning</secondary>
-<tertiary>cpuinfo_cur_freq</tertiary>
+<tertiary>affected-cpus</tertiary>
 </indexterm>
 
 <indexterm>
 <primary>tuning</primary>
 <secondary>CPUfreq</secondary>
-<tertiary>cpuinfo_cur_freq</tertiary>
+<tertiary>affected-cpus</tertiary>
 </indexterm>
 
 <indexterm>
-<primary>cpuinfo_cur_freq</primary>
+<primary>affected-cpus</primary>
 <secondary>CPUfreq</secondary>
 <tertiary>tuning</tertiary>
 </indexterm>			
-			<para><filename>cpuinfo_cur_freq</filename> &mdash; Shows the current speed of the CPU (in KHz).</para></listitem>
+			
+			</listitem>
+			
+			<listitem>
 		
-		<listitem>
+			<para><command>--policy</command> &mdash; Shows the range of the current CPUfreq policy, in KHz, and the currently active governor.</para>
+			
 <indexterm>
 <primary>CPUfreq</primary>
 <secondary>tuning</secondary>
-<tertiary>scaling_available_frequencies</tertiary>
+<tertiary>current policy</tertiary>
 </indexterm>
 
 <indexterm>
 <primary>tuning</primary>
 <secondary>CPUfreq</secondary>
-<tertiary>scaling_available_frequencies</tertiary>
+<tertiary>current policy</tertiary>
 </indexterm>
 
 <indexterm>
-<primary>scaling_available_frequencies</primary>
+<primary>current policy</primary>
 <secondary>CPUfreq</secondary>
 <tertiary>tuning</tertiary>
-</indexterm>			
-			<para><filename>scaling_available_frequencies</filename> &mdash; Lists available frequencies for the CPU, in KHz.</para></listitem>
+</indexterm>	
+			
+			</listitem>
+			
+			<listitem>
 		
-		<listitem>
+			<para><command>--hwlimits</command> &mdash; Lists available frequencies for the CPU, in KHz.</para>
+		
 <indexterm>
 <primary>CPUfreq</primary>
 <secondary>tuning</secondary>
-<tertiary>scaling_min_freq</tertiary>
+<tertiary>available frequencies</tertiary>
 </indexterm>
 
 <indexterm>
 <primary>tuning</primary>
 <secondary>CPUfreq</secondary>
-<tertiary>scaling_min_freq</tertiary>
+<tertiary>available frequencies</tertiary>
 </indexterm>
 
 <indexterm>
-<primary>scaling_min_freq</primary>
+<primary>available frequencies</primary>
 <secondary>CPUfreq</secondary>
 <tertiary>tuning</tertiary>
 </indexterm>			
-			<para><filename>scaling_min_freq</filename> and <filename>scaling_max_freq</filename> &mdash; Sets the <firstterm>policy limits</firstterm> of the CPU, in KHz.</para>
+
+</listitem>
+			
+		      </itemizedlist>
+		
+<para>
+  For <command>cpupower frequency-set</command>, the following options are available:
+</para>  
+	<itemizedlist>
+			
+	  <listitem>		
+			<para><command>--min <replaceable>&lt;freq&gt;</replaceable></command> and <command>--max <replaceable>&lt;freq&gt;</replaceable></command> &mdash; Set the <firstterm>policy limits</firstterm> of the CPU, in KHz.</para>
+			
+<indexterm>
+<primary>CPUfreq</primary>
+<secondary>tuning</secondary>
+<tertiary>minimum frequency</tertiary>
+</indexterm>
+
+<indexterm>
+<primary>tuning</primary>
+<secondary>CPUfreq</secondary>
+<tertiary>minimum frequency</tertiary>
+</indexterm>
+
+<indexterm>
+<primary>minimum frequency</primary>
+<secondary>CPUfreq</secondary>
+<tertiary>tuning</tertiary>
+</indexterm>				
 			
 <important>
 	<title>Important</title>
@@ -225,61 +255,107 @@
 <tertiary>tuning</tertiary>
 </indexterm>	
 	
-	<para>When setting policy limits, you should set <filename>scaling_max_freq</filename> before <filename>scaling_min_freq</filename>.</para>
+		      <para>When setting policy limits, you should set <filename>--max</filename> before <filename>--min</filename>.</para>
 </important>
 
 </listitem>
-
-		<listitem>
-<indexterm>
-<primary>CPUfreq</primary>
-<secondary>tuning</secondary>
-<tertiary>affected_cpus</tertiary>
-</indexterm>
-
-<indexterm>
-<primary>tuning</primary>
-<secondary>CPUfreq</secondary>
-<tertiary>affected_cpus</tertiary>
-</indexterm>
-
-<indexterm>
-<primary>affected_cpus</primary>
-<secondary>CPUfreq</secondary>
-<tertiary>tuning</tertiary>
-</indexterm>			
-			<para><filename>affected_cpus</filename> &mdash; Lists CPUs that require frequency coordination software.</para></listitem>
+	  
+	      <listitem>
 		
-		<listitem>
+			<para><command>--freq <replaceable>&lt;freq&gt;</replaceable></command> &mdash; Set a specific clock speed for the CPU, in KHz. You can only set a speed within the policy limits of the CPU (as per <filename>--min</filename> and <filename>--max</filename>).</para>
+			
 <indexterm>
 <primary>CPUfreq</primary>
 <secondary>tuning</secondary>
-<tertiary>scaling_setspeed</tertiary>
+<tertiary>specific frequency</tertiary>
 </indexterm>
 
 <indexterm>
 <primary>tuning</primary>
 <secondary>CPUfreq</secondary>
-<tertiary>scaling_setspeed</tertiary>
+<tertiary>specific frequency</tertiary>
 </indexterm>
 
 <indexterm>
-<primary>scaling_setspeed</primary>
+<primary>specific frequency</primary>
 <secondary>CPUfreq</secondary>
 <tertiary>tuning</tertiary>
-</indexterm>			
-			<para><filename>scaling_setspeed</filename> &mdash; Used to change the clock speed of the CPU, in KHz. You can only set a speed within the policy limits of the CPU (as per <filename>scaling_min_freq</filename> and <filename>scaling_max_freq</filename>).</para></listitem>
+</indexterm>	
+			
+			
+			</listitem>
+	  
+			<listitem>
+			  
+			<para><command>--governor <replaceable>&lt;gov&gt;</replaceable></command> &mdash; Set a new CPUfreq governor.</para>
+			
+<indexterm>
+<primary>CPUfreq</primary>
+<secondary>tuning</secondary>
+<tertiary>specific frequency</tertiary>
+</indexterm>
+
+<indexterm>
+<primary>tuning</primary>
+<secondary>CPUfreq</secondary>
+<tertiary>specific frequency</tertiary>
+</indexterm>
+
+<indexterm>
+<primary>specific frequency</primary>
+<secondary>CPUfreq</secondary>
+<tertiary>tuning</tertiary>
+</indexterm>	
+				
+			</listitem>
+			
+			
+	      <!-- <listitem>		
+			
+			<para><filename>scaling_governor</filename> &mdash; Shows what CPUfreq governor is currently in use. To use a different governor, simply use <command>echo <replaceable>[governor]</replaceable> > /sys/devices/system/cpu/<replaceable>[cpu ID]</replaceable>/cpufreq/scaling_governor</command> (refer to <xref linkend="enabling_a_cpufreq_governor"/> in <xref linkend="cpufreq_setup"/> for more information).</para>
+			
+<indexterm>
+<primary>CPUfreq</primary>
+<secondary>tuning</secondary>
+<tertiary>scaling_governor</tertiary>
+</indexterm>
+
+<indexterm>
+<primary>tuning</primary>
+<secondary>CPUfreq</secondary>
+<tertiary>scaling_governor</tertiary>
+</indexterm>
+
+<indexterm>
+<primary>scaling_governor</primary>
+<secondary>CPUfreq</secondary>
+<tertiary>tuning</tertiary>
+</indexterm>
+				
+			</listitem> -->
+		
+
+		
+		
 		
 </itemizedlist>		
+
+			<note>
+			  <title>Alternative to <command>cpupower</command></title>
+			  <para>
+			    If you do not have the <package>kernel-tools</package> package installed, CPUfreq settings can be viewed in the tunables found in <filename>/sys/devices/system/cpu/<replaceable>[cpuid]</replaceable>/cpufreq/</filename>. Settings and values can be changed by writing to these tunables. For example, to set the minimum clock speed of cpu0 to 360 KHz, use:
+<screen><command>echo 360000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq</command></screen>			      
+			  </para>
+			</note>  
 		
 	
 	
-	<para>To view the current value of each tunable, use <command>cat <replaceable>[tunable]</replaceable></command>. For example, to view the current speed of cpu0 (in KHz), use:</para>
+	<!-- <para>To view the current value of each tunable, use <command>cat <replaceable>[tunable]</replaceable></command>. For example, to view the current speed of cpu0 (in KHz), use:</para>
 	
 	<para><command>cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_cur_freq</command>.</para>
 	
 	<para>To change the value of each tunable, use <command>echo <replaceable>[value]</replaceable> > /sys/devices/system/cpu/<replaceable>[cpu ID]</replaceable>/cpufreq/<replaceable>[tunable]</replaceable></command>. For example, to set the minimum clock speed of cpu0 to 360 KHz, use:</para>
 	
-	<para><command>echo 360000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq</command></para>
+	<para><command>echo 360000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq</command></para> -->
 
 </section>

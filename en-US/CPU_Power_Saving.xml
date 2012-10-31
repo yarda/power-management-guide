@@ -1,0 +1,44 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docarticle/xml/4.5/docarticlex.dtd" [
+]>
+<section id="cpu_power_saving">
+	<title>CPU Power Saving Policies</title>
+	<para>
+	      <application>cpupower</application> provides ways to regulate your processor's power saving policies.
+	</para>
+	<para>
+	      Use the following options with the <command>cpupower set</command> command:
+	</para>  
+	
+	
+	<variablelist>
+		<varlistentry>
+			<term>--perf-bias <replaceable>&lt;0-15&gt;</replaceable></term>
+			<listitem>
+				<para>
+					Allows software on supported Intel processors to more actively contribute to determining the balance between optimum performance and saving power. This does not override other power saving policies. Assigned values range from 0 to 15, where 0 is optimum performance and 15 is optimum power efficiency.
+				</para>
+				<para>
+				  By default, this option applies to all cores. To apply it only to individual cores, add the <command>--cpu <replaceable>&lt;cpulist&gt;</replaceable></command> option.
+				</para>  
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>--sched-mc &lt;0|1|2&gt;</term>
+			<listitem>
+				<para>
+					Restricts the use of power by system processes to the cores in one CPU package before other CPU packages are drawn from. 0 sets no restrictions, 1 initially employs only a single CPU package, and 2 does this in addition to favouring semi-idle CPU packages for handling task wakeups.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>--sched-smt &lt;0|1|2&gt;</term>
+			<listitem>
+				<para>
+					Restricts the use of power by system processes to the thread siblings of one CPU core before drawing on other cores. 0 sets no restrictions, 1 initially employs only a single CPU package, and 2 does this in addition to favouring semi-idle CPU packages for handling task wakeups.
+				</para>
+			</listitem>
+		</varlistentry>
+	</variablelist>
+	
+</section>
