@@ -203,7 +203,7 @@
 <secondary>CPUfreq</secondary>
 <tertiary>governor types</tertiary>
 </indexterm>	
-	<para>The Userspace governor allows userspace programs (or any process running as root) to set the frequency. This governor is normally used in conjunction with the <command>cpuspeed</command> daemon. Of all the governors, Userspace is the most customizable; and depending on how it is configured, it can offer the best balance between performance and consumption for your system.</para>
+	<para>The Userspace governor allows userspace programs (or any process running as root) to set the frequency. Of all the governors, Userspace is the most customizable; and depending on how it is configured, it can offer the best balance between performance and consumption for your system.</para>
 </formalpara>
 
 <formalpara><title>cpufreq_conservative</title>
