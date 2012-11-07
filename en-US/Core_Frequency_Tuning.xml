@@ -113,7 +113,7 @@
 		<listitem>
 
 			
-			<para><command>--governors</command> &mdash; Shows the CPUfreq governors available in this kernel. If you wish to use a CPUfreq governor that is not listed in this file, refer to <xref linkend="enabling_a_cpufreq_governor"/> in <xref linkend="cpufreq_setup"/> for instructions on how to do so.</para>			
+			<para><command>--governors</command> &mdash; Shows the CPUfreq governors available in this kernel. If you wish to use a CPUfreq governor that is not listed in this file, refer to <xref linkend="cpufreq_setup"/> for instructions on how to do so.</para>			
 			
 <indexterm>
 <primary>CPUfreq</primary>

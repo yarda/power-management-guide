@@ -17,146 +17,21 @@
 		<secondary>CPUfreq</secondary>
 	</indexterm>
 	
-	<para>Before selecting and configuring a CPUfreq governor, you need to add the appropriate CPUfreq driver first.</para>
-	
-	<remark>add: how do you determine what the appropriate cpufreq driver is? that is how to choose between p4-clockmd and acpi-cpufreq?</remark>
-	<remark>Answer: always use acpi-cpufreq!</remark>
-
-<procedure><title>How to Add a CPUfreq Driver</title>
-	
-	<indexterm>
-		<primary>CPUfreq</primary>
-		<secondary>setup</secondary>
-		<tertiary>adding a driver</tertiary>
-	</indexterm>
-	
-	<indexterm>
-		<primary>setup</primary>
-		<secondary>CPUfreq</secondary>
-		<tertiary>adding a driver</tertiary>
-	</indexterm>
-	
-	<indexterm>
-		<primary>adding a driver</primary>
-		<secondary>CPUfreq</secondary>
-		<tertiary>setup</tertiary>
-	</indexterm>
-
-	<step>
-		<para>
-			Use the following command to view which CPUfreq drivers are available for your system:
-		</para>
-<screen><command>ls /lib/modules/<replaceable>[kernel version]</replaceable>/kernel/arch/<replaceable>[architecture]</replaceable>/kernel/cpu/cpufreq/</command></screen>
-	</step>
-
-	<step>
-		<para>
-			Use <command>modprobe</command> to add the appropriate CPUfreq driver.
-		</para>
-		
-<screen><command>modprobe <replaceable>[CPUfreq driver]</replaceable></command></screen>
-		
-		<para>
-			When using the above command, be sure to remove the <command>.ko</command> filename suffix.
-		</para>
-		
-	</step>	
-	
-	<!-- <step><para>Once the CPUfreq driver is set up, you can view which governor the system is currently using with:</para>
-		
-<screen><command>cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor</command></screen>
-	</step> -->
-</procedure>	
-
-<para>You can also view which governors are available for use for a specific CPU using:</para>
+<para>
+	 All CPUfreq drivers are built in and selected automatically, so to set up CPUfreq you just need to select a governor.
+</para>
+       
+<para>
+	You can view which governors are available for use for a specific CPU using:
+</para>
 
 <screen><command>cpupower frequency-info --governors</command></screen>
 
-<para>Some CPUfreq governors may not be available for you to use. In this case, use <command>modprobe</command> to add the necessary kernel modules that enable the specific CPUfreq governor you wish to use. These kernel modules are available in <filename>/lib/modules/<replaceable>[kernel version]</replaceable>/kernel/drivers/cpufreq/</filename>.</para> 
-
-<procedure id="enabling_a_cpufreq_governor"><title>Enabling a CPUfreq Governor</title>
-	<!-- next 4 indexterms for modprobe -->
-	
-	<indexterm>
-		<primary>CPUfreq</primary>
-		<secondary>setup</secondary>
-		<tertiary>modprobe</tertiary>
-	</indexterm>
-	
-	<indexterm>
-		<primary>setup</primary>
-		<secondary>CPUfreq</secondary>
-		<tertiary>modprobe</tertiary>
-	</indexterm>
-	
-	<indexterm>
-		<primary>modprobe</primary>
-		<secondary>CPUfreq</secondary>
-		<tertiary>setup</tertiary>
-	</indexterm>
-	
-	
-	<!-- next 4 indexterms for enabling a governor -->
-	
-	<indexterm>
-		<primary>CPUfreq</primary>
-		<secondary>setup</secondary>
-		<tertiary>enabling a governor</tertiary>
-	</indexterm>
-	
-	<indexterm>
-		<primary>setup</primary>
-		<secondary>CPUfreq</secondary>
-		<tertiary>enabling a governor</tertiary>
-	</indexterm>
-	
-	<indexterm>
-		<primary>enabling a governor</primary>
-		<secondary>CPUfreq</secondary>
-		<tertiary>setup</tertiary>
-	</indexterm>
-	
-	
-	<indexterm>
-		<primary>CPUfreq</primary>
-		<secondary>setup</secondary>
-		<tertiary>adding a governor</tertiary>
-	</indexterm>
-	
-	<indexterm>
-		<primary>setup</primary>
-		<secondary>CPUfreq</secondary>
-		<tertiary>adding a governor</tertiary>
-	</indexterm>
-	
-	<indexterm>
-		<primary>adding a governor</primary>
-		<secondary>CPUfreq</secondary>
-		<tertiary>setup</tertiary>
-	</indexterm>
-
-
-	<step>
-		<para>
-			If a specific governor is not listed as available for your CPU, use <command>modprobe</command> to enable the governor you wish to use. For example, if the <command>ondemand</command> governor is not available for your CPU, use the following command:
-		</para>
-<screen><command>modprobe cpufreq_ondemand</command></screen>
-	</step>
-	<step>
-		<para>
-			Once a governor is listed as available for your CPU, you can enable it using:
-		</para>
+<para>
+	You can then enable one of these governors using:
+</para>
 
 <screen><command>cpupower frequency-set --governor <replaceable>[governor]</replaceable></command></screen>
-	</step>
-</procedure>
-	
-<!--
-<note arch="review">
-         <title>PLACEHOLDER</title>
-         <para></para>
-</note>  
- -->
 
 </section>
 

@@ -276,6 +276,6 @@
 </indexterm>	
 	<para>You can enable a governor using <command>cron</command> jobs. This allows you to automatically set specific governors during specific times of the day. As such, you can specify a low-frequency governor during idle times (for example after work hours) and return to a higher-frequency governor during hours of heavy workload.</para>
 	
-	<para>For instructions on how to enable a specific governor, refer to <xref linkend="enabling_a_cpufreq_governor"/> in <xref linkend="cpufreq_setup"/>.</para>
+	<para>For instructions on how to enable a specific governor, refer to <xref linkend="cpufreq_setup"/>.</para>
 </note>
 </section>
