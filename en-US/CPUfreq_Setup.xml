@@ -28,10 +28,16 @@
 <screen><command>cpupower frequency-info --governors</command></screen>
 
 <para>
-	You can then enable one of these governors using:
+	You can then enable one of these governors on all CPUs using:
 </para>
 
 <screen><command>cpupower frequency-set --governor <replaceable>[governor]</replaceable></command></screen>
 
+<para>
+	To only enable a governor on specific cores, use <command>-c</command> with a range or comma-separated list of CPU numbers. For example, to enable the Userspace governor for CPUs 1-3 and 5, the command would be:
+</para>  
+  
+<screen><command>cpupower -c 1-3,5 frequency-set --governor cpufreq_userspace</command></screen>
+  
 </section>
 
