@@ -40,14 +40,14 @@
 		</varlistentry>
 	</variablelist>
   <para>
-    Output of the monitoring plugins can be used by tuning plugins for the dynamic tunings. Currently implemented dynamic tunings algorithms tries to balance performance and powersave, thus they are disabled in the performance profiles (dynamic tunings for individual plugins can be enabled/disabled in the <application>tuned</application> profiles). Each tuning plugin tunes individual subsystem and takes several parameters which are populated from the <application>tuned</application> profiles. Each subsystem can have multiple devices (e.g. multiple CPUs or network cards) which are handled by individual instances of the tuning plugins. Specific settings for individual devices is also supported. This can be also configured in the <application>tuned</application> profiles. In the supplied profiles there are simply wildcards that match all devices of individual subsystems (for details how to change it refer to <xref linkend="tuned-writing-profiles"/>). This way the plugins can tune the subsystems according to the required goal (selected profile) and the only thing that the user needs to do is to select the correct <application>tuned</application> profile (for details and list of supplied profiles see <xref linkend="tuned-adm"/>. Currently the following tuning plugins are implemented (only some of them implement dynamic tunings, supported parameters are also listed):
+    Output of the monitoring plugins can be used by tuning plugins for the dynamic tunings. Currently implemented dynamic tunings algorithms tries to balance performance and powersave, thus they are disabled in the performance profiles (dynamic tunings for individual plugins can be enabled/disabled in the <application>tuned</application> profiles). Each tuning plugin tunes individual subsystem and takes several parameters which are populated from the <application>tuned</application> profiles. Each subsystem can have multiple devices (e.g. multiple CPUs or network cards) which are handled by individual instances of the tuning plugins. Specific settings for individual devices is also supported. This can be also configured in the <application>tuned</application> profiles. In the supplied profiles there are simply wildcards that match all devices of individual subsystems (for details how to change it refer to <xref linkend="tuned-writing-profiles"/>). This way the plugins can tune the subsystems according to the required goal (selected profile) and the only thing that the user needs to do is to select the correct <application>tuned</application> profile (for details how to do it and list of supplied profiles see <xref linkend="tuned-adm"/>. Currently the following tuning plugins are implemented (only some of them implement dynamic tunings, parameters supported by plugins are also listed):
   </para>
 	<variablelist>
 		<varlistentry>
 			<term><literal>cpu</literal></term>
 			<listitem>
 				<para>
-					sets CPU <literal>governor</literal>, and dynamically changes PM QoS CPU DMA latency according to CPU load (set it to <literal>latency_high</literal> if CPU load is less than <literal>load_threshold</literal> otherwise set it to <literal>latency_low</literal>). Also the latency can be forced to specif value and not further dynamically changed by the setting the required value to the <literal>force_latency</literal>.
+					sets CPU governor to the value specified by <parameter>governor</parameter> parameter, and dynamically changes PM QoS CPU DMA latency according to the CPU load (it is set to value specified by <parameter>latency_high</parameter> if CPU load is less than value specified by <parameter>load_threshold</parameter> otherwise it is set to value specified by <parameter>latency_low</parameter>). Also the latency can be forced to some specic value and not further dynamically changed. This cam be accomplished by setting the required value to the <parameter>force_latency</parameter> parameter.
 				</para>
 			</listitem>
 		</varlistentry>
@@ -55,7 +55,7 @@
 			<term><literal>eeepc_she</literal></term>
 			<listitem>
 				<para>
-					sets FSB speed according to CPU load, this feature can be especialy found on some netbooks and is also known as Asus Super Hybrid Engine. The plugin sets the FSB to the <literal>she_powersave</literal> value if the CPU load is bellow or equal to <literal>load_threshold_powersave</literal> and sets it to <literal>she_normal</literal> if the CPU load is above or equeal to <literal>load_threshold_normal</literal>. There is no supported static tunings. The plugin is transparently disabled if the hardware support for this feature is not found.
+					dynamically sets FSB speed according to CPU load, this feature can be found on some netbooks (it is also known as Asus Super Hybrid Engine). The plugin sets the FSB to the value specified by <parameter>she_powersave</parameter> parameter if the CPU load is bellow or equal to the value specified by <parameter>load_threshold_powersave</parameter> parameter and sets it to the value specified by <parameter>she_normal</parameter> parameter if the CPU load is above or equeal to the value specified by <parameter>load_threshold_normal</parameter> parameter. There is no static tunings supported. The plugin is transparently disabled if the hardware support is not detected.
 				</para>
 			</listitem>
 		</varlistentry>
@@ -63,7 +63,7 @@
 			<term><literal>net</literal></term>
 			<listitem>
 				<para>
-				  sets <literal>wake_on_lan</literal> (uses same syntax as <application>ethtool</application>). It also dynamically changes the interface speed according to interface utilization. 
+				  configures wake on lan to the values specified by <parameter>wake_on_lan</parameter> parameter (same syntax as in <application>ethtool</application> is used). It also dynamically changes the interface speed according to the interface utilization. 
 				</para>
 			</listitem>
 		</varlistentry>
@@ -71,7 +71,7 @@
 			<term><literal>sysctl</literal></term>
 			<listitem>
 				<para>
-					it can set various <systemitem>sysctl</systemitem> settings. Use it in case you need to change settings which are not covered by other plugins (please prefer other plugins if the settings is covered there).
+					it can set various <systemitem>sysctl</systemitem> settings specified by plugin parameters. Syntax is the <literal>name</literal>=<literal>value</literal>, where <literal>name</literal> is the same name as provided by the <application>sysctl</application> tool. Use this plugin in case you need to change settings which are not covered by other plugins (please prefer other plugins if the settings is covered there).
 				</para>
 			</listitem>
 		</varlistentry>
@@ -79,7 +79,7 @@
 			<term><literal>usb</literal></term>
 			<listitem>
 				<para>
-					enables / disables <literal>autosuspend</literal> for USB devices.
+					sets autosuspend timeout of USB devices to the value specified by <parameter>autosuspend</parameter> parameter. The value 0 means that autosuspend is disabled.
 				</para>
 			</listitem>
 		</varlistentry>
@@ -87,7 +87,7 @@
 			<term><literal>vm</literal></term>
 			<listitem>
 				<para>
-					enables / disables <literal>transparent_hugepages</literal>.
+					enables / disables the transparent hugepages according to the boolean value of the <parameter>transparent_hugepages</parameter> parameter.
 				</para>
 			</listitem>
 		</varlistentry>
@@ -95,7 +95,7 @@
 			<term><literal>audio</literal></term>
 			<listitem>
 				<para>
-					sets autosuspend <literal>timeout</literal> for audio codecs (currently snd_hda_intel and snd_ac97_codec are supported), also the controller reset can be enforced by <literal>reset_controller</literal>.
+					sets autosuspend timeout for audio codecs to the value specified by <parameter>timeout</parameter> parameter. Currently <literal>snd_hda_intel</literal> and <literal>snd_ac97_codec</literal> are supported. The value 0 means that the autosuspend is disabled. Also the controller reset can be enforced by setting the boolean parameter <parameter>reset_controller</parameter> to <literal>true</literal>.
 				</para>
 			</listitem>
 		</varlistentry>
@@ -103,7 +103,7 @@
 			<term><literal>disk</literal></term>
 			<listitem>
 				<para>
-					sets <literal>elevator</literal>, <literal>alpm</literal> (<xref linkend="ALPM"/>), <literal>aspm</literal> (<xref linkend="ASPM"/>), <literal>scheduler_quantum</literal>, disk <literal>spindown</literal>, disk <literal>readahead</literal> or multiply the current disk readahead by <literal>readahead_multiply</literal>. This plugin reports CPU loads per CPU and measurement interval. It also dynamically changes the advanced power management and spindown setting for the drive according to the current drive load (number of IO operations per monitored interval).
+					sets elevator to the value specified by <parameter>elevator</parameter> parameter, ALPM to the value specified by <parameter>alpm</parameter> parameter (refer to <xref linkend="ALPM"/>), ASPM to the value specified by <parameter>aspm</parameter> parameter (refer to<xref linkend="ASPM"/>), scheduler quantum to the value specified by <parameter>scheduler_quantum</parameter> parameter, disk spindown timeout to the value specified by <parameter>spindown</parameter> parameter, disk readahead to the value specified by <parameter>readahead</parameter> parameter or it can multiply the current disk readahead value by the constant specified by <parameter>readahead_multiply</parameter>. It also dynamically changes the advanced power management and spindown timeout setting for the drive according to the current drive utilization.
 				</para>
 			</listitem>
 		</varlistentry>
@@ -111,7 +111,7 @@
 			<term><literal>mounts</literal></term>
 			<listitem>
 				<para>
-					enables / disables barriers for the mounts according to settings of <literal>disable_barriers</literal>.
+					enables / disables barriers for the mounts according to the boolean value of the <parameter>disable_barriers</parameter> parameter.
 				</para>
 			</listitem>
 		</varlistentry>
@@ -119,7 +119,7 @@
 			<term><literal>script</literal></term>
 			<listitem>
 				<para>
-					this plugin can be used for execution of external <literal>script</literal> on profile load / unload. The script takes one argument (<literal>start</literal> or <literal>stop></literal> whether it is run on profile load / unload.
+					this plugin can be used for execution of external script that will be run on profile load / unload. The script takes one argument which is <literal>start</literal> or <literal>stop></literal> according to the condition which caused the script to run (profile load / unload). The script to be run can be specified by the <parameter>script</parameter>. Please note you need to correctly implement the stop action and revert there all the setting you did on the start action, otherwise the roll-back will not work. For your convinience there is the <filename>functions</filename> script installed by the <application>tuned</application> which you can import and use the various functions defined there. Please use this as the last resort and prefer other plugins if the required setting is covered there.  
 				</para>
 			</listitem>
 		</varlistentry>
@@ -127,7 +127,7 @@
 			<term><literal>sysfs</literal></term>
 			<listitem>
 				<para>
-					it can set various <systemitem>sysfs</systemitem> settings. Use it in case you need to change settings which are not covered by other plugins (please prefer other plugins if the settings is covered there).
+					it can set various <systemitem>sysfs</systemitem> settings specified by plugin parameters. Syntax is the <literal>name</literal>=<literal>value</literal>, where <literal>name</literal> is the <systemitem>sysfs</systemitem> path to use. Use this plugin in case you need to change settings which are not covered by other plugins (please prefer other plugins if the settings is covered there).
 				</para>
 			</listitem>
 		</varlistentry>
@@ -135,7 +135,7 @@
 			<term><literal>video</literal></term>
 			<listitem>
 				<para>
-				 it can set radeon graphics to various powersave levels according to <literal>radeon_powersave</literal> settings (<literal>default</literal>, <literal>auto</literal>, <literal>low</literal>, <literal>mid</literal>, <literal>high</literal>, <literal>dynpm</literal>).
+				 it can set various powersave levels on video cards (currently only the Radeon cards are supported). The powersave level can be specified by <parameter>radeon_powersave</parameter> parameter. The supported values are: <literal>default</literal>, <literal>auto</literal>, <literal>low</literal>, <literal>mid</literal>, <literal>high</literal>, <literal>dynpm</literal>. For details refer to <ulink url="http://www.x.org/wiki/RadeonFeature#KMS_Power_Management_Options"></ulink>. 
 				</para>
 			</listitem>
 		</varlistentry>
