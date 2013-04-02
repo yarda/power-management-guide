@@ -27,30 +27,27 @@
 	<para>
 		While it runs, <application>PowerTOP</application> gathers statistics from the system. In the <guimenu>Overview</guimenu> tab, you can view a list of the components that are either sending wake-ups to the CPU most frequently or are consuming the most power (refer to <xref linkend="fig-PowerTOP"/>). The adjacent columns display power estimation, how the resource is being used, wakeups per second, the classification of the component (such as process, device, or timer), and a description of the component. Wakeups per second indicates how efficiently the services or the devices and drivers of the kernel are performing. Less wakeups means less power is consumed. Components are ordered by how much further their power usage can be optimized.</para><para>Tuning driver components typically requires kernel changes, which is beyond the scope of this document. However, userland processes that send wakeups are more easily managed. First, identify if this service or application needs to run at all on this system. If not, simply deactivate it. To turn off an old SYSV service permanently, run:
 	</para>
-<screen><command>chkconfig <replaceable>servicename</replaceable> off</command></screen>
+<screen><command>systemctl disable <replaceable>servicename.service</replaceable></command></screen>
   <para>
-    To turn off a new systemd service permanently, run:
-  </para>
-<screen><command>systemctl <replaceable>servicename.service</replaceable> disable</command></screen>
-  <para>
-		If you need more details about the what the component actually does, run: 
+		If you need more details about the what the process actually does, run: 
 	</para>
-<screen><command>ps -awux | grep <replaceable>componentname</replaceable></command> 
+<screen><command>ps -awux | grep <replaceable>processname</replaceable></command> 
 <command>strace -p <replaceable>processid</replaceable></command></screen>
 	<para>
 		If the trace looks like it is repeating itself, then you probably have found a busy loop. Fixing such bugs typically requires a code change in that component, which again goes beyond the scope of this document.
 	</para>
   <para>
-    As seen in <xref linkend="fig-PowerTOP"/>, total power consumption and the remaining battery life are displayed, if applicable. Below these is a short summary, featuring total wakeups per second, GPU operations per second, and virtual filesystem operations per second.
+    As seen in <xref linkend="fig-PowerTOP"/>, total power consumption and the remaining battery life are displayed, if applicable. Below these is a short summary, featuring total wakeups per second, GPU operations per second, and virtual filesystem operations per second. In the rest of the screen there is a list of processes, interrupts, devices and other resources sorted according their utilization. If properly calibrated there is also shown a power consumption estimation for every listed item in the first column. 
 	</para>
   <para>
-    Use the <keycap>left</keycap> and <keycap>right</keycap> keys to cycle through tabs. In the <guimenu>Idle stats</guimenu> tab, use of C-states is shown for all processors and cores. In the <guimenu>Frequency stats</guimenu> tab, use of P-states including the Turbo mode (if applicable) is shown for all processors and cores. The longer the CPU stays in the higher C- or P-states, the better (<literal>C4</literal> being higher than <literal>C3</literal>). This is a good indication of how well CPU usage has been optimized. Residency should ideally be 90% or more in the highest C- or P-state while the system is idle.
+    Use the <keycap>Tab</keycap> and
+    <keycombo><keycap>Shift</keycap><keycap>Tab</keycap></keycombo> keys to cycle through tabs. In the <guimenu>Idle stats</guimenu> tab, use of C-states is shown for all processors and cores. In the <guimenu>Frequency stats</guimenu> tab, use of P-states including the Turbo mode (if applicable) is shown for all processors and cores. The longer the CPU stays in the higher C- or P-states, the better (<literal>C4</literal> being higher than <literal>C3</literal>). This is a good indication of how well CPU usage has been optimized. Residency should ideally be 90% or more in the highest C- or P-state while the system is idle.
         </para>
         <para>
                 The <guimenu>Device Stats</guimenu> tab provides similar information to <guimenu>Overview</guimenu> but only for devices.
 	</para>
         <para>
-                The <guimenu>Tunables</guimenu> tab contains suggestions for optimizing the system for lower power consumption. The <keycap>up</keycap> and <keycap>down</keycap> keys can be used to move through suggestions. The <keycap>enter</keycap> key toggles the suggestion on and off. These tunings are not persistent across reboots. This problem has been referred to developers.
+                The <guimenu>Tunables</guimenu> tab contains suggestions for optimizing the system for lower power consumption. The <keycap>up</keycap> and <keycap>down</keycap> keys can be used to move through suggestions. The <keycap>enter</keycap> key toggles the suggestion on and off. These tunings are not persistent across reboots. To make them persistent you can use the <application>powertop2tuned</application> tool (refer to <xref linkend="powertop2tuned"/>).
 	</para>
 	<figure id="fig-PowerTOP" float="0"><title>PowerTOP in Operation</title>
 		<mediaobject>
@@ -61,7 +58,15 @@
 			</textobject>
 		</mediaobject>
 	</figure>
-	<para>
-		The <citetitle>Less Watts</citetitle> website publishes a list of applications that <application>PowerTOP</application> has identified as keeping CPUs active. Refer to <ulink url="http://www.lesswatts.org/projects/powertop/known.php"></ulink>. 
+  <para>
+    You can also create nice HTML reports by running <application>PowerTOP</application> with the <option>--html</option> option:
+  </para>
+  <screen><command>powertop --html=<replaceable>htmlfile.html</replaceable></command></screen>
+  <para>
+    By default <application>PowerTOP</application> takes measurements in 20 seconds intervals, you can change it with the <option>--time</option> option:
+  </para>
+  <screen><command>powertop --html=<replaceable>htmlfile.html</replaceable> --time=<replaceable>seconds</replaceable></command></screen>
+    <para>
+		The <citetitle>Less Watts</citetitle> website publishes a list of applications that <application>PowerTOP</application> has identified as keeping CPUs active. For more details refer to <ulink url="http://www.lesswatts.org/projects/powertop/known.php"></ulink>. 
 	</para>
 </section>
