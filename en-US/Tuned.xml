@@ -2,22 +2,146 @@
 <!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docarticle/xml/4.5/docarticlex.dtd" [
 ]>
 <section id="Tuned">
-	<title>Tuned and ktune</title>
+	<title>Tuned</title>
 	
 	<para>
-		<application>Tuned</application> is a daemon that monitors the use of system components and dynamically tunes system settings based on that monitoring information. Dynamic tuning accounts for the way that various system components are used differently throughout the uptime for any given system. For example, the hard drive is used heavily during startup and login, but is barely used later when a user might mainly work with applications like OpenOffice or email clients. Similarly, the CPU and network devices are used differently at different times. <application>Tuned</application> monitors the activity of these components and reacts to changes in their use. 
+		<application>Tuned</application> is a daemon that tunes system settings statically and dynamically according to selected profile(s). There are prepared various profiles for various use cases like high throughput, low latency and powersave. The static tuning mainly consists of application of predefined <systemitem>sysctl</systemitem> and <systemitem>sysfs</systemitem> settings and one-shot activation of several configuration tools like <application>ethtool</application>. The main advantage of using <application>tuned</application> is that all the changes made to the system settings by the specific profile can be easily rolled-back by simply unloading the profile (i.e. by switching to another profile or by deactivation of the <application>tuned</application> daemon). Tuned daemon also monitors the use of system components and tunes system settings dynamically based on that monitoring information. Dynamic tuning accounts for the way that various system components are used differently throughout the uptime for any given system. For example, the hard drive is used heavily during startup and login, but is barely used later when a user might mainly work with applications like WWW browsers or email clients. Similarly, the CPU and network devices are used differently at different times. <application>Tuned</application> monitors the activity of these components and reacts to changes in their use. 
 	</para>
 	<para>
 		As a practical example, consider a typical office workstation. Most of the time, the Ethernet network interface will be very inactive. Only a few emails will go in and out every once in a while or some web pages might be loaded. For those kinds of loads, the network interface doesn't have to run at full speed all the time, as it does by default. <application>Tuned</application> has a monitoring and tuning plugin for network devices that can detect that low activity and then automatically lower the speed of that interface, typically resulting in lower power usage. If activity on the interface increases drastically for a longer period of time, for example because a DVD image is being downloaded or an email with a large attachment is opened, <application>tuned</application> detects this and sets the interface speed to maximum to offer the best performance while the activity level is so high. This principle is used for the other plugins for CPU and hard disks as well.
 	</para>
-	<para>
-		Network devices are not configured to behave this way by default because speed changes can take several seconds to take effect and therefore directly and visibly impact the user experience. Similar considerations apply for the CPU and hard drive tuning plugins. When a hard drive has been spun down, it can take several seconds for it to spin up again which results in an observed lack of responsiveness of the system during that period. The latency side effect is smallest for the CPU plugin, but it is still at least measurable, though hardly noticeable by a user.
-	</para>
-	<para>
-		Alongside of <application>tuned</application> we now also offer <application>ktune</application>. <application>Ktune</application> was originally a framework and service to optimize the performance of a machine for a specific use cases. Since then, <application>ktune</application> has improved to such a degree that we now use it as the static part of our general tuning framework. It is mainly used in the different predefined profiles described in <xref linkend="tuned-adm"/>.
-	</para>
-
-	<para>
+  <para>
+    There are two types of plugins in <application>tuned</application>, the monitoring and tuning plugins. Currently the following monitoring plugins are implemented:
+  </para>
+	<variablelist>
+		<varlistentry>
+			<term><literal>disk</literal></term>
+			<listitem>
+				<para>
+					reports disk loads (number of IO operations) per device and measurement interval.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><literal>net</literal></term>
+			<listitem>
+				<para>
+					This plugin reports net loads (number of transferred packets) per network card and measurement interval.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><literal>load</literal></term>
+			<listitem>
+				<para>
+					This plugin reports CPU loads per CPU and measurement interval.
+				</para>
+			</listitem>
+		</varlistentry>
+	</variablelist>
+  <para>
+    Output of the monitoring plugins can be used by tuning plugins for the dynamic tunings. Currently implemented dynamic tunings algorithms tries to balance performance and powersave, thus they are disabled in the performance profiles (dynamic tunings for individual plugins can be enabled/disabled in the <application>tuned</application> profiles). Each tuning plugin tunes individual subsystem and takes several parameters which are populated from the <application>tuned</application> profiles. Each subsystem can have multiple devices (e.g. multiple CPUs or network cards) which are handled by individual instances of the tuning plugins. Specific settings for individual devices is also supported. This can be also configured in the <application>tuned</application> profiles. In the supplied profiles there are simply wildcards that match all devices of individual subsystems (for details how to change it refer to <xref linkend="tuned-writing-profiles"/>). This way the plugins can tune the subsystems according to the required goal (selected profile) and the only thing that the user needs to do is to select the correct <application>tuned</application> profile (for details and list of supplied profiles see <xref linkend="tuned-adm"/>. Currently the following tuning plugins are implemented (only some of them implement dynamic tunings, supported parameters are also listed):
+  </para>
+	<variablelist>
+		<varlistentry>
+			<term><literal>cpu</literal></term>
+			<listitem>
+				<para>
+					sets CPU <literal>governor</literal>, and dynamically changes PM QoS CPU DMA latency according to CPU load (set it to <literal>latency_high</literal> if CPU load is less than <literal>load_threshold</literal> otherwise set it to <literal>latency_low</literal>). Also the latency can be forced to specif value and not further dynamically changed by the setting the required value to the <literal>force_latency</literal>.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><literal>eeepc_she</literal></term>
+			<listitem>
+				<para>
+					sets FSB speed according to CPU load, this feature can be especialy found on some netbooks and is also known as Asus Super Hybrid Engine. The plugin sets the FSB to the <literal>she_powersave</literal> value if the CPU load is bellow or equal to <literal>load_threshold_powersave</literal> and sets it to <literal>she_normal</literal> if the CPU load is above or equeal to <literal>load_threshold_normal</literal>. There is no supported static tunings. The plugin is transparently disabled if the hardware support for this feature is not found.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><literal>net</literal></term>
+			<listitem>
+				<para>
+				  sets <literal>wake_on_lan</literal> (uses same syntax as <application>ethtool</application>). It also dynamically changes the interface speed according to interface utilization. 
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><literal>sysctl</literal></term>
+			<listitem>
+				<para>
+					it can set various <systemitem>sysctl</systemitem> settings. Use it in case you need to change settings which are not covered by other plugins (please prefer other plugins if the settings is covered there).
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><literal>usb</literal></term>
+			<listitem>
+				<para>
+					enables / disables <literal>autosuspend</literal> for USB devices.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><literal>vm</literal></term>
+			<listitem>
+				<para>
+					enables / disables <literal>transparent_hugepages</literal>.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><literal>audio</literal></term>
+			<listitem>
+				<para>
+					sets autosuspend <literal>timeout</literal> for audio codecs (currently snd_hda_intel and snd_ac97_codec are supported), also the controller reset can be enforced by <literal>reset_controller</literal>.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><literal>disk</literal></term>
+			<listitem>
+				<para>
+					sets <literal>elevator</literal>, <literal>alpm</literal> (<xref linkend="ALPM"/>), <literal>aspm</literal> (<xref linkend="ASPM"/>), <literal>scheduler_quantum</literal>, disk <literal>spindown</literal>, disk <literal>readahead</literal> or multiply the current disk readahead by <literal>readahead_multiply</literal>. This plugin reports CPU loads per CPU and measurement interval. It also dynamically changes the advanced power management and spindown setting for the drive according to the current drive load (number of IO operations per monitored interval).
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><literal>mounts</literal></term>
+			<listitem>
+				<para>
+					enables / disables barriers for the mounts according to settings of <literal>disable_barriers</literal>.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><literal>script</literal></term>
+			<listitem>
+				<para>
+					this plugin can be used for execution of external <literal>script</literal> on profile load / unload. The script takes one argument (<literal>start</literal> or <literal>stop></literal> whether it is run on profile load / unload.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><literal>sysfs</literal></term>
+			<listitem>
+				<para>
+					it can set various <systemitem>sysfs</systemitem> settings. Use it in case you need to change settings which are not covered by other plugins (please prefer other plugins if the settings is covered there).
+				</para>
+			</listitem>
+		</varlistentry>
+			<varlistentry>
+			<term><literal>video</literal></term>
+			<listitem>
+				<para>
+				 it can set radeon graphics to various powersave levels according to <literal>radeon_powersave</literal> settings (<literal>default</literal>, <literal>auto</literal>, <literal>low</literal>, <literal>mid</literal>, <literal>high</literal>, <literal>dynpm</literal>).
+				</para>
+			</listitem>
+		</varlistentry>
+	</variablelist>
+ 
+  <para>
 		Install the <package>tuned</package> package and its associated <application>systemtap</application> scripts with the command:
 	</para>
 <screen><command>yum install tuned</command></screen>
@@ -387,4 +511,17 @@ enabled=True</programlisting>
 			Modify any of the files in the new profile to match your personal requirements. 
 		</para>
 	</section>
+	<section id="tuned-writing-profiles">
+		<title>Writing profiles</title>
+		<para>
+    Writing profiles.
+    </para>
+	</section>
+	<section id="powertop2tuned">
+		<title>Powertop2tuned</title>
+		<para>
+    Powertop2tuned.
+    </para>
+	</section>
 </section>
+
